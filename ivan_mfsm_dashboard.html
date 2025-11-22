@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivan MFSM Stats Dashboard</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="ivan-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ivan-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -362,5 +364,64 @@
         updateRefreshInfo();
         setInterval(updateRefreshInfo, 1000);
     </script>
+
+    <!-- METHODOLOGY SECTION -->
+    <div style="background: white; border-radius: 13px; padding: 30px; margin-top: 30px; box-shadow: 0 9px 22px rgba(0,0,0,0.2);">
+        <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.8em; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            📊 Methodology & Definitions
+        </h2>
+
+        <div style="line-height: 1.8; color: #2c3e50;">
+            <h3 style="color: #764ba2; margin-top: 20px; margin-bottom: 10px;">What Are Tracker Apps?</h3>
+            <p style="margin-bottom: 15px;">
+                <strong>Tracker apps</strong> monitor customers who have <strong>ALREADY been marked as "sat"</strong> in Closer apps.
+                When a closer successfully completes an appointment and marks the customer as "sat" in the Closer app (in the S.E.E. workspace),
+                that customer is automatically added to the corresponding Tracker app.
+            </p>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Key Metrics Explained</h3>
+            <ul style="margin-left: 25px; margin-bottom: 15px;">
+                <li><strong>Total Sits:</strong> Count of all customers who were marked as "sat" and are being tracked</li>
+                <li><strong>Paid Sits:</strong> Number of sits where payment has been received</li>
+                <li><strong>Unpaid Sits:</strong> Number of sits where payment is still outstanding</li>
+                <li><strong>APS (Amount Per Sit):</strong> The dollar amount paid per sit (varies by tracker/company)</li>
+                <li><strong>Total Owed:</strong> Calculated as <code>Unpaid Sits × APS</code></li>
+            </ul>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Calculation Methods</h3>
+            <ul style="margin-left: 25px; margin-bottom: 15px;">
+                <li><strong>Grand Total Unpaid Balance:</strong> Sum of all tracker unpaid balances across all companies</li>
+                <li><strong>Payment Status:</strong> Determined by the "Paid status" field in each tracker (values: "Paid" or "Need to pay")</li>
+                <li><strong>Monthly Breakdown:</strong> Sits are grouped by appointment date month</li>
+                <li><strong>Company Breakdown:</strong> Shows sits per tracker (Elevate You, Suntria, MEB, etc.)</li>
+            </ul>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Flow</h3>
+            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #667eea; margin: 15px 0;">
+                <p style="margin: 5px 0;">1. Appointment is set for customer</p>
+                <p style="margin: 5px 0;">2. Closer goes to appointment (tracked in Closer App)</p>
+                <p style="margin: 5px 0;">3. Customer is marked as "Sat = Yes" in Closer App</p>
+                <p style="margin: 5px 0;">4. Customer automatically appears in Tracker App</p>
+                <p style="margin: 5px 0;">5. Tracker monitors payment status and balance owed</p>
+            </div>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Sorting & Display</h3>
+            <p style="margin-bottom: 15px;">
+                All appointments are sorted in <strong>descending order by appointment date</strong>,
+                meaning the most recent appointments appear at the top of each list.
+            </p>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Source</h3>
+            <p style="margin-bottom: 15px;">
+                All data is pulled directly from Podio Tracker Apps via API. Each tracker (MEB, Elevate You, Suntria, etc.)
+                maintains its own separate Podio app with identical structure but different managers and APS amounts.
+            </p>
+
+            <p style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
+                For detailed technical documentation, see <code>README_TRACKER_APPS.md</code> in the project folder.
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
