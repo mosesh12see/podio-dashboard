@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivan MFSM Stats Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        .last-updated {
+            text-align: center;
+            opacity: 0.6;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .stat-card h2 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .metric {
+            margin: 12px 0;
+        }
+
+        .metric-label {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .metric-value {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .metric-value.percentage {
+            color: #4ade80;
+        }
+
+        .metric-value.money {
+            color: #fbbf24;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95em;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-row-label {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        .metric-row-value {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .summary-section {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .summary-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 18px;
+            color: #667eea;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .summary-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .summary-box .label {
+            font-size: 0.85em;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .summary-box .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #4ade80;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.5;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ IVAN MFSM STATS</h1>
+            <p>Performance Dashboard (Ivan Solar Boss Manager)</p>
+        </div>
+
+        <div class="last-updated">
+            Last Updated: November 18, 2025 at 09:01 AM<br>
+            <span style="font-size: 0.75em; opacity: 0.7; font-style: italic;">cron job: 9am, 12pm, 3pm, 6pm, 9pm daily | last ran: november 18, 2025 at 09:01 am</span>
+        </div>
+
+        <!-- Fixed floating refresh timer -->
+        <div id="refreshTimer" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.9); color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; min-width: 200px;">
+            <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
+            <div id="countdown" style="font-size: 14px; font-weight: 700; color: #00ff88;"></div>
+        </div>
+
+        <div class="summary-section">
+            <h2>📊 Quick Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-box">
+                    <div class="label">YTD Total Appointments</div>
+                    <div class="value">65</div>
+                </div>
+                <div class="summary-box">
+                    <div class="label">MTD Total Appointments</div>
+                    <div class="value">37</div>
+                </div>
+                <div class="summary-box">
+                    <div class="label">WTD Total Appointments</div>
+                    <div class="value">13</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <!-- YTD Card -->
+            <div class="stat-card">
+                <h2>📅 YTD (Year to Date)</h2>
+                <div class="metric">
+                    <div class="metric-label">Sit Rate</div>
+                    <div class="metric-value percentage">73.0%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Close Rate</div>
+                    <div class="metric-value percentage">32.6%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">States</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (36), MO (11), IL (9), MI (6), KS (3)</div>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total Appointments</span>
+                    <span class="metric-row-value">65</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Sits</span>
+                    <span class="metric-row-value">46</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Closed</span>
+                    <span class="metric-row-value">15</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total KW</span>
+                    <span class="metric-row-value">119.82 KW</span>
+                </div>
+            </div>
+
+            <!-- MTD Card -->
+            <div class="stat-card">
+                <h2>📆 MTD (Month to Date)</h2>
+                <div class="metric">
+                    <div class="metric-label">Sit Rate</div>
+                    <div class="metric-value percentage">57.1%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Close Rate</div>
+                    <div class="metric-value percentage">50.0%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">States</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (36), MO (1)</div>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total Appointments</span>
+                    <span class="metric-row-value">37</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Sits</span>
+                    <span class="metric-row-value">20</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Closed</span>
+                    <span class="metric-row-value">10</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total KW</span>
+                    <span class="metric-row-value">85.6 KW</span>
+                </div>
+            </div>
+
+            <!-- WTD Card -->
+            <div class="stat-card">
+                <h2>📅 WTD (Week to Date)</h2>
+                <div class="metric">
+                    <div class="metric-label">Sit Rate</div>
+                    <div class="metric-value percentage">27.3%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Close Rate</div>
+                    <div class="metric-value percentage">33.3%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">States</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (12), MO (1)</div>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total Appointments</span>
+                    <span class="metric-row-value">13</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Sits</span>
+                    <span class="metric-row-value">3</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Closed</span>
+                    <span class="metric-row-value">1</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-row-label">Total KW</span>
+                    <span class="metric-row-value">4.92 KW</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Ivan MFSM Stats Dashboard | Data from Podio Closer App</p>
+            <p>YTD: 2025-01-01 - 2025-11-18 | MTD: 2025-11-01 - 2025-11-18 | WTD: 2025-11-17 - 2025-11-18</p>
+            <p style="margin-top: 10px;">Tracking: MFSM Manager (Ivan Solar Boss)</p>
+        </div>
+    </div>
+
+    <script>
+        // Next refresh calculator and countdown timer
+        function updateRefreshInfo() {
+            const now = new Date();
+            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; // Hourly from 8am to 8pm
+
+            // Find next refresh time
+            let nextRefreshHour = null;
+            const currentHour = now.getHours();
+
+            // Find next cron time today
+            for (let hour of cronTimes) {
+                if (hour > currentHour) {
+                    nextRefreshHour = hour;
+                    break;
+                }
+            }
+
+            // If no more cron times today, use first one tomorrow
+            const nextRefresh = new Date(now);
+            if (nextRefreshHour === null) {
+                nextRefresh.setDate(nextRefresh.getDate() + 1);
+                nextRefreshHour = cronTimes[0];
+            }
+            nextRefresh.setHours(nextRefreshHour, 0, 0, 0);
+
+            // Calculate time difference
+            const diff = nextRefresh - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Format next refresh time
+            const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+            const timeStr = nextRefresh.toLocaleTimeString('en-US', options);
+            const dateStr = nextRefresh.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Update display
+            document.getElementById('nextRefresh').textContent = `⏰ Next Refresh: ${dateStr} at ${timeStr}`;
+            document.getElementById('countdown').textContent = `⏳ Time Until: ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Update immediately and then every second
+        updateRefreshInfo();
+        setInterval(updateRefreshInfo, 1000);
+    </script>
+</body>
+</html>

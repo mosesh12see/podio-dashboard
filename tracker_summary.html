@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tracker Apps Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 22px;
+        }
+        .header h1 { font-size: 1.9em; margin-bottom: 9px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .totals-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 22px;
+            border-radius: 13px;
+            margin-bottom: 22px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 9px 22px rgba(0,0,0,0.3);
+        }
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 13px;
+            margin-top: 16px;
+        }
+        .sales-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 13px;
+            margin-top: 13px;
+        }
+        .total-card { background: rgba(255,255,255,0.2); padding: 16px; border-radius: 9px; }
+        .total-card h3 { font-size: 0.87em; opacity: 0.9; margin-bottom: 9px; }
+        .total-card .number { font-size: 1.7em; font-weight: bold; }
+
+        .trackers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .tracker-card {
+            background: white;
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 9px 22px rgba(0,0,0,0.2);
+        }
+        .tracker-card h2 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 1.4em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 9px;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.97em;
+        }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #666; font-weight: 500; }
+        .stat-value { font-weight: bold; color: #2c3e50; }
+        .stat-value.money { color: #27ae60; font-size: 1.07em; }
+
+        .appointments-section {
+            background: white;
+            border-radius: 13px;
+            padding: 22px;
+            box-shadow: 0 9px 22px rgba(0,0,0,0.2);
+        }
+        .appointments-section h2 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 1.5em;
+        }
+        .appt-card {
+            background: #f8f9fa;
+            padding: 13px;
+            margin: 9px 0;
+            border-radius: 9px;
+            border-left: 4px solid #667eea;
+            font-size: 0.97em;
+        }
+        .appt-card.paid {
+            border-left-color: #27ae60;
+            background: #f0fff4;
+        }
+        .appt-card.unpaid {
+            border-left-color: #e74c3c;
+            background: #fff5f5;
+        }
+        .appt-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 9px;
+        }
+        .appt-customer {
+            font-size: 1.07em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .appt-company {
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+        .appt-details {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            font-size: 0.9em;
+        }
+        .appt-detail { color: #666; }
+        .appt-detail strong { color: #2c3e50; }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .badge.paid { background: #27ae60; color: white; }
+        .badge.unpaid { background: #e74c3c; color: white; }
+        .badge.closed { background: #3498db; color: white; }
+        .badge.warning { background: #f39c12; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tracker Apps Dashboard</h1>
+            <p>Complete overview of all tracker apps with Closer App data</p>
+            <p style="font-size: 0.9em; opacity: 0.9;">Data Source: Fresh API | Last Updated: 2025-11-22T10:00:01.627157</p>
+            <p style="font-size: 0.7em; opacity: 0.7; margin-top: 8px; font-style: italic;">cron job: hourly from 8am to 8pm daily | last ran: november 22, 2025 at 10:04 am</p>
+        </div>
+
+        <!-- Fixed floating refresh timer -->
+        <div id="refreshTimer" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; min-width: 200px; border: 2px solid rgba(255, 255, 255, 0.3);">
+            <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
+            <div id="countdown" style="font-size: 14px; font-weight: 700; color: #ffeb3b;"></div>
+        </div>
+
+        <div class="totals-banner">
+            <h2>Grand Totals</h2>
+            <div class="totals-grid">
+                <div class="total-card">
+                    <h3>Total Balance Owed</h3>
+                    <div class="number">$27,943.0</div>
+                </div>
+                <div class="total-card">
+                    <h3>Total Appointments</h3>
+                    <div class="number">177</div>
+                </div>
+                <div class="total-card">
+                    <h3>Closed Deals</h3>
+                    <div class="number">54</div>
+                </div>
+                <div class="total-card">
+                    <h3>Close Rate</h3>
+                    <div class="number">30.5%</div>
+                </div>
+            </div>
+            <div class="sales-grid">
+                <div class="total-card">
+                    <h3>Unpaid Sits</h3>
+                    <div class="number">62</div>
+                </div>
+                <div class="total-card">
+                    <h3>YTD Sales</h3>
+                    <div class="number">54</div>
+                </div>
+                <div class="total-card">
+                    <h3>MTD Sales</h3>
+                    <div class="number">6</div>
+                </div>
+                <div class="total-card">
+                    <h3>WTD Sales</h3>
+                    <div class="number">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trackers-grid">
+
+            <div class="tracker-card">
+                <h2>Elevate You</h2>
+                <div class="stat">
+                    <span class="stat-label">Total Appointments</span>
+                    <span class="stat-value">49</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Paid / Unpaid</span>
+                    <span class="stat-value">37 / 12</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Closed Deals</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">24</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Close Rate</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">49.0%</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Rate Per Sit</span>
+                    <span class="stat-value">$350</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Sit Balance (Unpaid)</span>
+                    <span class="stat-value money">$4,200</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total KW Closed</span>
+                    <span class="stat-value">3.68 KW</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Rate</span>
+                    <span class="stat-value">$0.2/watt</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Balance</span>
+                    <span class="stat-value money">$736</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label"><strong>Total Balance Owed</strong></span>
+                    <span class="stat-value money"><strong>$4,936</strong></span>
+                </div>
+            </div>
+
+            <div class="tracker-card">
+                <h2>Suntria</h2>
+                <div class="stat">
+                    <span class="stat-label">Total Appointments</span>
+                    <span class="stat-value">28</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Paid / Unpaid</span>
+                    <span class="stat-value">14 / 14</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Closed Deals</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Close Rate</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">3.6%</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Rate Per Sit</span>
+                    <span class="stat-value">$450</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Sit Balance (Unpaid)</span>
+                    <span class="stat-value money">$6,300</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total KW Closed</span>
+                    <span class="stat-value">5.07 KW</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Rate</span>
+                    <span class="stat-value">$0.1/watt</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Balance</span>
+                    <span class="stat-value money">$507</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label"><strong>Total Balance Owed</strong></span>
+                    <span class="stat-value money"><strong>$6,807</strong></span>
+                </div>
+            </div>
+
+            <div class="tracker-card">
+                <h2>MEB</h2>
+                <div class="stat">
+                    <span class="stat-label">Total Appointments</span>
+                    <span class="stat-value">100</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Paid / Unpaid</span>
+                    <span class="stat-value">64 / 36</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Closed Deals</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">29</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Close Rate</span>
+                    <span class="stat-value" style="color: #3498db; font-weight: bold;">29.0%</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Rate Per Sit</span>
+                    <span class="stat-value">$450</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Sit Balance (Unpaid)</span>
+                    <span class="stat-value money">$16,200</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total KW Closed</span>
+                    <span class="stat-value">0.00 KW</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Rate</span>
+                    <span class="stat-value">$0.05/watt</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Watt Balance</span>
+                    <span class="stat-value money">$0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label"><strong>Total Balance Owed</strong></span>
+                    <span class="stat-value money"><strong>$16,200</strong></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="appointments-section">
+            <h2>Closed Deals Missing KW Data</h2>
+            <p style="color: #666; margin-bottom: 20px;">These closed deals need KW information added in the Closer App</p>
+
+            <h3 style="color: #667eea; margin: 20px 0 10px 0; border-bottom: 2px solid #667eea; padding-bottom: 5px;">
+                Elevate You (23 deals)
+            </h3>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Kevin Freeman</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Christopher Pickens</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Nancy Hogan</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Patrice Neuwirth</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Adonica Worley</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Donna Whittaker</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Jama Rooney</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Shaunda Adams</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">VIRGINIA A BURNETT</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Christopher Dyer</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Dennis Williams</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Erin Hosler</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Lailah Hafiz</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">David Allen</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Darren Melton</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Robert Brown</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Eryka Adair</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Kai Kahm</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Sheri Beamon</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Ghita Datuk</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Michael Turner</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Jason Lewis</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Katrine Copeland</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 20px 0 10px 0; border-bottom: 2px solid #667eea; padding-bottom: 5px;">
+                MEB (29 deals)
+            </h3>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Thomas E Pryor</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Danny Hunt</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Gregory Mccarty</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Donald Davis</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Julia Lee</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Anna Werner</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Linda Hamilton</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Rodger Gilbert</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Mike Fitzjarrell</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Cynthia Wagner</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Beth Heine</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Michael Perkins</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">David Greiner</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Michael Perkins</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Kumara Vadivelu</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">TAMMY A BENSON</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Elliot Naes</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Diane Burton</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">John Towers</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">PATRICK A TESI</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Steven Myers</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Cynthia Martin</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Allen Brown</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Brittany Morrison</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Pamela Reynolds</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">William Kidwell</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Marsha Lynch</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Jennifer Sheehan</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> No Close</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+            <div class="appt-card unpaid">
+                <div class="appt-header">
+                    <span class="appt-customer">Cynthia Martin</span>
+                    <span class="badge warning">NO KW DATA</span>
+                </div>
+                <div class="appt-details">
+                    <div class="appt-detail"><strong>Status:</strong> Closed! $</div>
+                    <div class="appt-detail"><strong>Sit:</strong> Yes</div>
+                    <div class="appt-detail"><strong>KW:</strong> 0</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="appointments-section" style="margin-top: 30px;">
+            <h2>Sits Per Month (Last 6 Months)</h2>
+            <p style="color: #666; margin-bottom: 20px;">Monthly breakdown of all sits across all trackers (Elevate You + Suntria + MEB)</p>
+
+            <div class="totals-grid" style="margin-top: 20px;">
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>November 2025</h3>
+                    <div class="number">12</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 5 | Suntria: 0 | MEB: 7</p>
+                </div>
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>October 2025</h3>
+                    <div class="number">48</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 1 | Suntria: 7 | MEB: 40</p>
+                </div>
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>September 2025</h3>
+                    <div class="number">80</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 20 | Suntria: 9 | MEB: 44</p>
+                </div>
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>August 2025</h3>
+                    <div class="number">18</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 14 | Suntria: 4 | MEB: 0</p>
+                </div>
+
+            </div>
+
+            <div class="totals-grid" style="margin-top: 20px;">
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>July 2025</h3>
+                    <div class="number">1</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 1 | Suntria: 0 | MEB: 0</p>
+                </div>
+
+                <div class="total-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>June 2025</h3>
+                    <div class="number">0</div>
+                    <p style="font-size: 0.7em; opacity: 0.8; margin-top: 5px;">Elevate: 0 | Suntria: 0 | MEB: 0</p>
+                </div>
+
+                <div class="total-card" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);">
+                    <h3></h3>
+                    <div class="number"></div>
+                </div>
+
+                <div class="total-card" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);">
+                    <h3></h3>
+                    <div class="number"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Next refresh calculator and countdown timer
+        function updateRefreshInfo() {
+            const now = new Date();
+            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; // Hourly from 8am to 8pm
+
+            // Find next refresh time
+            let nextRefreshHour = null;
+            const currentHour = now.getHours();
+
+            // Find next cron time today
+            for (let hour of cronTimes) {
+                if (hour > currentHour) {
+                    nextRefreshHour = hour;
+                    break;
+                }
+            }
+
+            // If no more cron times today, use first one tomorrow
+            const nextRefresh = new Date(now);
+            if (nextRefreshHour === null) {
+                nextRefresh.setDate(nextRefresh.getDate() + 1);
+                nextRefreshHour = cronTimes[0];
+            }
+            nextRefresh.setHours(nextRefreshHour, 0, 0, 0);
+
+            // Calculate time difference
+            const diff = nextRefresh - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Format next refresh time
+            const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+            const timeStr = nextRefresh.toLocaleTimeString('en-US', options);
+            const dateStr = nextRefresh.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Update display
+            document.getElementById('nextRefresh').textContent = `Next refresh: ${timeStr}`;
+            document.getElementById('countdown').textContent = `Time until: ${hours}h ${minutes}m`;
+        }
+
+        // Update immediately and then every second
+        updateRefreshInfo();
+        setInterval(updateRefreshInfo, 1000);
+    </script>
+</body>
+</html>

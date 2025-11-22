@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs to Review - Podio Analysis</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1800px; margin: 0 auto; }
+
+        .header {
+            background: linear-gradient(135deg, #ff0080 0%, #7928ca 50%, #ff0080 100%);
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(255, 0, 128, 0.3);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle { font-size: 20px; opacity: 0.95; }
+        .header .date { font-size: 16px; opacity: 0.8; margin-top: 10px; }
+
+        .summary-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ff0080;
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(255, 0, 128, 0.2);
+        }
+
+        .summary-box h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #ff0080;
+            border-bottom: 3px solid #7928ca;
+            padding-bottom: 15px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: rgba(121, 40, 202, 0.1);
+            border: 1px solid #7928ca;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-card .label {
+            font-size: 13px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .value {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ff0080;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 0, 128, 0.2);
+        }
+
+        th {
+            background: rgba(121, 40, 202, 0.3);
+            color: #ff0080;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(121, 40, 202, 0.1);
+        }
+
+        .company-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .company-meb { background: #ff0080; color: #fff; }
+        .company-elevate { background: #7928ca; color: #fff; }
+        .company-suntria { background: #00ff88; color: #000; }
+        .company-olawashan { background: #ffaa00; color: #000; }
+        .company-rockie { background: #00aaff; color: #000; }
+
+        .sit-warning {
+            color: #ff4444;
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 2px solid #ff0080;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ JOBS TO REVIEW ⚠️</h1>
+            <div class="subtitle">Closed Deals with Sit Status Issues</div>
+            <div class="date">Generated: November 22, 2025 at 10:04 AM</div>
+            <div class="date" style="font-size: 12px; margin-top: 8px; opacity: 0.7; font-style: italic;">cron job: hourly from 8am to 8pm daily | last ran: november 22, 2025 at 10:04 am</div>
+        </div>
+
+        <!-- Fixed floating refresh timer -->
+        <div id="refreshTimer" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.9); color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; min-width: 200px;">
+            <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
+            <div id="countdown" style="font-size: 14px; font-weight: 700; color: #00ff88;"></div>
+        </div>
+
+        <div class="summary-box">
+            <h2>📊 Summary</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="label">Total Jobs to Review</div>
+                    <div class="value">11</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Total Tracker Customers</div>
+                    <div class="value">171</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Closer App Items</div>
+                    <div class="value">6325</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <h2>🔍 Criteria</h2>
+            <p style="margin-bottom: 10px; opacity: 0.9;">Jobs are flagged when:</p>
+            <ul style="margin-left: 30px; opacity: 0.8;">
+                <li>Customer exists in a Tracker app (already marked as "sat")</li>
+                <li>Customer found in Closer app by name match</li>
+                <li>Sit field in Closer app is BLANK or anything except "Yes"</li>
+            </ul>
+            <p style="margin-top: 15px; opacity: 0.7; font-style: italic;">
+                ⚠️ Note: Matching by customer name only - Closer app doesn't have address field
+            </p>
+        </div>
+
+        <div class="summary-box">
+            <h2>📋 Jobs Requiring Review</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer Name</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Sit</th>
+                        <th>KW</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Keith Missey</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No-Closers TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Jane Mcneely</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Companys</td>
+                        <td><strong>0.0000</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Matthew Graham</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Setter TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Robert Hall</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Setter TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Robert Hall</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Upcoming Appt</td>
+                        <td class="sit-warning">BLANK</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>6</td>
+                        <td><strong>Connie Wright</strong></td>
+                        <td><span class="company-badge company-meb">MEB</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Setter TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>7</td>
+                        <td><strong>Stephen Gettemeier</strong></td>
+                        <td><span class="company-badge company-elevateyou">Elevate You</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Setter TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>8</td>
+                        <td><strong>Seth Chapman</strong></td>
+                        <td><span class="company-badge company-elevateyou">Elevate You</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No-Closers TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>9</td>
+                        <td><strong>George Lovelace</strong></td>
+                        <td><span class="company-badge company-elevateyou">Elevate You</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No- Setter TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>10</td>
+                        <td><strong>Kari Kufahl</strong></td>
+                        <td><span class="company-badge company-elevateyou">Elevate You</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No-Closers TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                    <tr>
+                        <td>11</td>
+                        <td><strong>William James</strong></td>
+                        <td><span class="company-badge company-elevateyou">Elevate You</span></td>
+                        <td>Yes</td>
+                        <td class="sit-warning">No-Closers TRI</td>
+                        <td><strong>N/A</strong></td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>🤖 Automated Jobs Review Report</p>
+            <p>Podio Tracker → Closer App Analysis</p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                Matches: 11 | Total Checked: 171
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Next refresh calculator and countdown timer
+        function updateRefreshInfo() {
+            const now = new Date();
+            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; // Hourly from 8am to 8pm
+
+            // Find next refresh time
+            let nextRefreshHour = null;
+            const currentHour = now.getHours();
+
+            // Find next cron time today
+            for (let hour of cronTimes) {
+                if (hour > currentHour) {
+                    nextRefreshHour = hour;
+                    break;
+                }
+            }
+
+            // If no more cron times today, use first one tomorrow
+            const nextRefresh = new Date(now);
+            if (nextRefreshHour === null) {
+                nextRefresh.setDate(nextRefresh.getDate() + 1);
+                nextRefreshHour = cronTimes[0];
+            }
+            nextRefresh.setHours(nextRefreshHour, 0, 0, 0);
+
+            // Calculate time difference
+            const diff = nextRefresh - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Format next refresh time
+            const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+            const timeStr = nextRefresh.toLocaleTimeString('en-US', options);
+            const dateStr = nextRefresh.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Update display
+            document.getElementById('nextRefresh').textContent = `Next refresh: ${timeStr}`;
+            document.getElementById('countdown').textContent = `Time until: ${hours}h ${minutes}m`;
+        }
+
+        // Update immediately and then every second
+        updateRefreshInfo();
+        setInterval(updateRefreshInfo, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,2467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete Podio Dashboard - Sits & Assigns</title>
+    <meta charset="utf-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1600px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin: 5px 0;
+        }
+
+        .totals-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .totals-banner h2 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 0.75em;
+            opacity: 0.85;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-card .number {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .stat-card .breakdown {
+            font-size: 0.7em;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .manager-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .sits-count {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .assigns-count {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .total-count {
+            color: #8e44ad;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .monthly-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .month-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .month-card h3 {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .month-card .total {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .month-card .breakdown {
+            font-size: 0.8em;
+            opacity: 0.85;
+        }
+
+        .info-banner {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .info-banner p {
+            color: #856404;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Complete Podio Dashboard</h1>
+            <p>All Sits & Assigns by Manager (Excluding Infinit AI)</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">Last Updated: 2025-11-21T15:08:31.056172</p>
+            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">Generated: November 21, 2025 at 03:42 PM</p>
+            <p style="font-size: 0.75em; opacity: 0.6; margin-top: 5px; font-style: italic;">cron job: hourly from 8am to 8pm</p>
+        </div>
+
+        <!-- Fixed floating refresh timer -->
+        <div id="refreshTimer" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; min-width: 200px; border: 2px solid rgba(255, 255, 255, 0.3);">
+            <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
+            <div id="countdown" style="font-size: 14px; font-weight: 700; color: #ffeb3b;"></div>
+        </div>
+
+
+        <!-- Month by Month Section -->
+        <div class="section">
+            <h2>📊 Month by Month Breakdown (Last 12 Months)</h2>
+            <div class="monthly-grid">
+
+                <div class="month-card">
+                    <h3>December 2024</h3>
+                    <div class="total">344</div>
+                    <div class="breakdown">
+                        165 sits • 179 assigns<br>
+                        104 closes (30.2%)<br>
+                        <span style="color: #00ff88;">Avg: 38.1 sits/week</span><br>
+                        Sit Rev: $90,750 | Close Rev: $240,656<br>
+                        <strong>Total: $331,406</strong><br>
+                        <strong>Profit: $273,656</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>January 2025</h3>
+                    <div class="total">347</div>
+                    <div class="breakdown">
+                        171 sits • 176 assigns<br>
+                        98 closes (28.2%)<br>
+                        <span style="color: #00ff88;">Avg: 39.5 sits/week</span><br>
+                        Sit Rev: $94,050 | Close Rev: $226,772<br>
+                        <strong>Total: $320,822</strong><br>
+                        <strong>Profit: $260,972</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>February 2025</h3>
+                    <div class="total">279</div>
+                    <div class="breakdown">
+                        166 sits • 113 assigns<br>
+                        112 closes (40.1%)<br>
+                        <span style="color: #00ff88;">Avg: 38.3 sits/week</span><br>
+                        Sit Rev: $91,300 | Close Rev: $259,168<br>
+                        <strong>Total: $350,468</strong><br>
+                        <strong>Profit: $292,368</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>March 2025</h3>
+                    <div class="total">434</div>
+                    <div class="breakdown">
+                        269 sits • 165 assigns<br>
+                        205 closes (47.2%)<br>
+                        <span style="color: #00ff88;">Avg: 62.1 sits/week</span><br>
+                        Sit Rev: $147,950 | Close Rev: $474,370<br>
+                        <strong>Total: $622,320</strong><br>
+                        <strong>Profit: $528,170</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>April 2025</h3>
+                    <div class="total">413</div>
+                    <div class="breakdown">
+                        254 sits • 159 assigns<br>
+                        186 closes (45.0%)<br>
+                        <span style="color: #00ff88;">Avg: 58.7 sits/week</span><br>
+                        Sit Rev: $139,700 | Close Rev: $430,404<br>
+                        <strong>Total: $570,104</strong><br>
+                        <strong>Profit: $481,204</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>May 2025</h3>
+                    <div class="total">334</div>
+                    <div class="breakdown">
+                        207 sits • 127 assigns<br>
+                        156 closes (46.7%)<br>
+                        <span style="color: #00ff88;">Avg: 47.8 sits/week</span><br>
+                        Sit Rev: $113,850 | Close Rev: $360,984<br>
+                        <strong>Total: $474,834</strong><br>
+                        <strong>Profit: $402,384</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>June 2025</h3>
+                    <div class="total">324</div>
+                    <div class="breakdown">
+                        213 sits • 111 assigns<br>
+                        169 closes (52.2%)<br>
+                        <span style="color: #00ff88;">Avg: 49.2 sits/week</span><br>
+                        Sit Rev: $117,150 | Close Rev: $391,066<br>
+                        <strong>Total: $508,216</strong><br>
+                        <strong>Profit: $433,666</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>July 2025</h3>
+                    <div class="total">386</div>
+                    <div class="breakdown">
+                        257 sits • 129 assigns<br>
+                        211 closes (54.7%)<br>
+                        <span style="color: #00ff88;">Avg: 59.4 sits/week</span><br>
+                        Sit Rev: $141,350 | Close Rev: $488,254<br>
+                        <strong>Total: $629,604</strong><br>
+                        <strong>Profit: $539,654</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>August 2025</h3>
+                    <div class="total">414</div>
+                    <div class="breakdown">
+                        278 sits • 136 assigns<br>
+                        135 closes (32.6%)<br>
+                        <span style="color: #00ff88;">Avg: 64.2 sits/week</span><br>
+                        Sit Rev: $152,900 | Close Rev: $312,390<br>
+                        <strong>Total: $465,290</strong><br>
+                        <strong>Profit: $367,990</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>September 2025</h3>
+                    <div class="total">315</div>
+                    <div class="breakdown">
+                        210 sits • 105 assigns<br>
+                        65 closes (20.6%)<br>
+                        <span style="color: #00ff88;">Avg: 48.5 sits/week</span><br>
+                        Sit Rev: $115,500 | Close Rev: $150,410<br>
+                        <strong>Total: $265,910</strong><br>
+                        <strong>Profit: $192,410</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>October 2025</h3>
+                    <div class="total">296</div>
+                    <div class="breakdown">
+                        191 sits • 105 assigns<br>
+                        60 closes (20.3%)<br>
+                        <span style="color: #00ff88;">Avg: 44.1 sits/week</span><br>
+                        Sit Rev: $105,050 | Close Rev: $138,840<br>
+                        <strong>Total: $243,890</strong><br>
+                        <strong>Profit: $177,040</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>November 2025</h3>
+                    <div class="total">205</div>
+                    <div class="breakdown">
+                        115 sits • 90 assigns<br>
+                        49 closes (23.9%)<br>
+                        <span style="color: #00ff88;">Avg: 37.9 sits/week</span><br>
+                        Sit Rev: $63,250 | Close Rev: $113,386<br>
+                        <strong>Total: $176,636</strong><br>
+                        <strong>Profit: $136,386</strong>
+                        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2);"><strong style="color: #00d4ff;">Projected: 293</strong><br><span style="font-size: 11px; opacity: 0.7;">Based on current pace</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="totals-banner">
+            <h2>📈 Overall Totals</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>WTD Total</h3>
+                    <div class="number">69</div>
+                    <div class="breakdown">26 sits • 43 assigns • 10 closes</div>
+                </div>
+                <div class="stat-card">
+                    <h3>WTD Close Rate</h3>
+                    <div class="number">14.5%</div>
+                    <div class="breakdown">10 closes this week</div>
+                </div>
+                <div class="stat-card">
+                    <h3>WTD Revenue</h3>
+                    <div class="number">$479,870</div>
+                    <div class="breakdown">Profit: $97,650</div>
+                </div>
+                <div class="stat-card">
+                    <h3>MTD Total</h3>
+                    <div class="number">206</div>
+                    <div class="breakdown">115 sits • 91 assigns • 49 closes</div>
+                </div>
+                <div class="stat-card">
+                    <h3>MTD Close Rate</h3>
+                    <div class="number">23.8%</div>
+                    <div class="breakdown">49 closes this month</div>
+                </div>
+                <div class="stat-card">
+                    <h3>MTD Revenue</h3>
+                    <div class="number">$2,351,363</div>
+                    <div class="breakdown">Profit: $478,485</div>
+                </div>
+                <div class="stat-card">
+                    <h3>MTD Pacing</h3>
+                    <div class="number">294 appts</div>
+                    <div class="breakdown">Avg: 9.8/day • 9 days left</div>
+                </div>
+                <div class="stat-card">
+                    <h3>YTD Total</h3>
+                    <div class="number">3748</div>
+                    <div class="breakdown">2331 sits • 1417 assigns • 1446 closes</div>
+                </div>
+                <div class="stat-card">
+                    <h3>YTD Close Rate</h3>
+                    <div class="number">38.6%</div>
+                    <div class="breakdown">1446 closes this year</div>
+                </div>
+                <div class="stat-card">
+                    <h3>YTD Revenue</h3>
+                    <div class="number">$69,389,202</div>
+                    <div class="breakdown">Profit: $14,120,190</div>
+                </div>
+                <div class="stat-card">
+                    <h3>YTD Sit Rate</h3>
+                    <div class="number">62.5%</div>
+                    <div class="breakdown">Percentage of sits (excl. today)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Low Performers Alert Section (Last 14 Days) -->
+
+        <!-- WTD Section -->
+        <div class="section">
+            <h2 style="display: flex; justify-content: space-between; align-items: center;">
+                <span>📅 Week to Date (WTD)</span>
+                <span style="font-size: 0.6em; font-weight: normal; color: #888;">
+                    Total: 26 sits • 22 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 54.2%</strong>
+                </span>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Manager</th>
+                        <th>Sits</th>
+                        <th>Assigns</th>
+                        <th>Total</th>
+                        <th>Closes</th>
+                        <th>Sit Rate</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td class="manager-name">MFSM, Solar Boss</td>
+                        <td class="sits-count">16</td>
+                        <td class="assigns-count">17</td>
+                        <td class="total-count">33</td>
+                        <td class="total-count">7</td>
+                        <td><strong style="color: #667eea;">69.6%</strong></td>
+                        <td class="stat-value money">$335,909</td>
+                        <td class="stat-value money">$68,355</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">John Flowers</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">9</td>
+                        <td class="total-count">14</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">10</td>
+                        <td class="total-count">13</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">30.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin King, Solar Boss</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Walter Zulueta</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">MFSM</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MTD Section -->
+        <div class="section">
+            <h2 style="display: flex; justify-content: space-between; align-items: center;">
+                <span>📅 Month to Date (MTD)</span>
+                <span style="font-size: 0.6em; font-weight: normal; color: #888;">
+                    Total: 115 sits • 70 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 62.2%</strong>
+                </span>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Manager</th>
+                        <th>Sits</th>
+                        <th>Assigns</th>
+                        <th>Total</th>
+                        <th>Closes</th>
+                        <th>Sit Rate</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td class="manager-name">MFSM, Solar Boss</td>
+                        <td class="sits-count">33</td>
+                        <td class="assigns-count">24</td>
+                        <td class="total-count">57</td>
+                        <td class="total-count">16</td>
+                        <td><strong style="color: #667eea;">70.2%</strong></td>
+                        <td class="stat-value money">$767,792</td>
+                        <td class="stat-value money">$156,240</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
+                        <td class="sits-count">30</td>
+                        <td class="assigns-count">19</td>
+                        <td class="total-count">49</td>
+                        <td class="total-count">7</td>
+                        <td><strong style="color: #667eea;">65.2%</strong></td>
+                        <td class="stat-value money">$335,909</td>
+                        <td class="stat-value money">$68,355</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">John Flowers</td>
+                        <td class="sits-count">29</td>
+                        <td class="assigns-count">27</td>
+                        <td class="total-count">56</td>
+                        <td class="total-count">13</td>
+                        <td><strong style="color: #667eea;">55.8%</strong></td>
+                        <td class="stat-value money">$623,831</td>
+                        <td class="stat-value money">$126,945</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Walter Zulueta</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">10</td>
+                        <td class="total-count">17</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">46.7%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence</td>
+                        <td class="sits-count">6</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">7</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">85.7%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin King, Solar Boss</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="sits-count">4</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">6</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mark</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Unassigned</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">MFSM</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- YTD Section -->
+        <div class="section">
+            <h2 style="display: flex; justify-content: space-between; align-items: center;">
+                <span>📅 Year to Date (YTD)</span>
+                <span style="font-size: 0.6em; font-weight: normal; color: #888;">
+                    Total: 2331 sits • 1396 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 62.5%</strong>
+                </span>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Manager</th>
+                        <th>Sits</th>
+                        <th>Assigns</th>
+                        <th>Total</th>
+                        <th>Closes</th>
+                        <th>Sit Rate</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td class="manager-name">Austin King</td>
+                        <td class="sits-count">286</td>
+                        <td class="assigns-count">97</td>
+                        <td class="total-count">383</td>
+                        <td class="total-count">240</td>
+                        <td><strong style="color: #667eea;">74.7%</strong></td>
+                        <td class="stat-value money">$11,516,880</td>
+                        <td class="stat-value money">$2,343,600</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Walter Zulueta</td>
+                        <td class="sits-count">284</td>
+                        <td class="assigns-count">206</td>
+                        <td class="total-count">490</td>
+                        <td class="total-count">168</td>
+                        <td><strong style="color: #667eea;">58.2%</strong></td>
+                        <td class="stat-value money">$8,061,816</td>
+                        <td class="stat-value money">$1,640,520</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
+                        <td class="sits-count">157</td>
+                        <td class="assigns-count">136</td>
+                        <td class="total-count">293</td>
+                        <td class="total-count">46</td>
+                        <td><strong style="color: #667eea;">54.1%</strong></td>
+                        <td class="stat-value money">$2,207,402</td>
+                        <td class="stat-value money">$449,190</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wrinklefree</td>
+                        <td class="sits-count">133</td>
+                        <td class="assigns-count">85</td>
+                        <td class="total-count">218</td>
+                        <td class="total-count">98</td>
+                        <td><strong style="color: #667eea;">61.0%</strong></td>
+                        <td class="stat-value money">$4,702,726</td>
+                        <td class="stat-value money">$956,970</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt Stettler</td>
+                        <td class="sits-count">87</td>
+                        <td class="assigns-count">33</td>
+                        <td class="total-count">120</td>
+                        <td class="total-count">72</td>
+                        <td><strong style="color: #667eea;">72.5%</strong></td>
+                        <td class="stat-value money">$3,455,064</td>
+                        <td class="stat-value money">$703,080</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Robert Soderholm</td>
+                        <td class="sits-count">81</td>
+                        <td class="assigns-count">43</td>
+                        <td class="total-count">124</td>
+                        <td class="total-count">64</td>
+                        <td><strong style="color: #667eea;">65.3%</strong></td>
+                        <td class="stat-value money">$3,071,168</td>
+                        <td class="stat-value money">$624,960</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Max Ganley</td>
+                        <td class="sits-count">73</td>
+                        <td class="assigns-count">41</td>
+                        <td class="total-count">114</td>
+                        <td class="total-count">51</td>
+                        <td><strong style="color: #667eea;">64.0%</strong></td>
+                        <td class="stat-value money">$2,447,337</td>
+                        <td class="stat-value money">$498,015</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence</td>
+                        <td class="sits-count">63</td>
+                        <td class="assigns-count">28</td>
+                        <td class="total-count">91</td>
+                        <td class="total-count">47</td>
+                        <td><strong style="color: #667eea;">69.2%</strong></td>
+                        <td class="stat-value money">$2,255,389</td>
+                        <td class="stat-value money">$458,955</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">John Flowers</td>
+                        <td class="sits-count">47</td>
+                        <td class="assigns-count">32</td>
+                        <td class="total-count">79</td>
+                        <td class="total-count">20</td>
+                        <td><strong style="color: #667eea;">62.7%</strong></td>
+                        <td class="stat-value money">$959,740</td>
+                        <td class="stat-value money">$195,300</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kyle Kozlansky, Krystal Chandler, Cody Veibell</td>
+                        <td class="sits-count">47</td>
+                        <td class="assigns-count">12</td>
+                        <td class="total-count">59</td>
+                        <td class="total-count">31</td>
+                        <td><strong style="color: #667eea;">79.7%</strong></td>
+                        <td class="stat-value money">$1,487,597</td>
+                        <td class="stat-value money">$302,715</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">FreddieB</td>
+                        <td class="sits-count">39</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">47</td>
+                        <td class="total-count">26</td>
+                        <td><strong style="color: #667eea;">83.0%</strong></td>
+                        <td class="stat-value money">$1,247,662</td>
+                        <td class="stat-value money">$253,890</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">James King</td>
+                        <td class="sits-count">39</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">44</td>
+                        <td class="total-count">25</td>
+                        <td><strong style="color: #667eea;">88.6%</strong></td>
+                        <td class="stat-value money">$1,199,675</td>
+                        <td class="stat-value money">$244,125</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Chad Weltlich</td>
+                        <td class="sits-count">34</td>
+                        <td class="assigns-count">13</td>
+                        <td class="total-count">47</td>
+                        <td class="total-count">21</td>
+                        <td><strong style="color: #667eea;">72.3%</strong></td>
+                        <td class="stat-value money">$1,007,727</td>
+                        <td class="stat-value money">$205,065</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">MFSM, Solar Boss</td>
+                        <td class="sits-count">33</td>
+                        <td class="assigns-count">24</td>
+                        <td class="total-count">57</td>
+                        <td class="total-count">16</td>
+                        <td><strong style="color: #667eea;">70.2%</strong></td>
+                        <td class="stat-value money">$767,792</td>
+                        <td class="stat-value money">$156,240</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Coltrane Charczenko</td>
+                        <td class="sits-count">32</td>
+                        <td class="assigns-count">21</td>
+                        <td class="total-count">53</td>
+                        <td class="total-count">21</td>
+                        <td><strong style="color: #667eea;">60.4%</strong></td>
+                        <td class="stat-value money">$1,007,727</td>
+                        <td class="stat-value money">$205,065</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Akilgore@hellonivo.com</td>
+                        <td class="sits-count">30</td>
+                        <td class="assigns-count">14</td>
+                        <td class="total-count">44</td>
+                        <td class="total-count">27</td>
+                        <td><strong style="color: #667eea;">68.2%</strong></td>
+                        <td class="stat-value money">$1,295,649</td>
+                        <td class="stat-value money">$263,655</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="sits-count">29</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">33</td>
+                        <td class="total-count">18</td>
+                        <td><strong style="color: #667eea;">87.9%</strong></td>
+                        <td class="stat-value money">$863,766</td>
+                        <td class="stat-value money">$175,770</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kyle Kozlansky, Cody Veibell, Krystal Chandler</td>
+                        <td class="sits-count">29</td>
+                        <td class="assigns-count">13</td>
+                        <td class="total-count">42</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">69.0%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">MFSM</td>
+                        <td class="sits-count">26</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">29</td>
+                        <td class="total-count">8</td>
+                        <td><strong style="color: #667eea;">92.9%</strong></td>
+                        <td class="stat-value money">$383,896</td>
+                        <td class="stat-value money">$78,120</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cade Adams</td>
+                        <td class="sits-count">26</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">33</td>
+                        <td class="total-count">17</td>
+                        <td><strong style="color: #667eea;">78.8%</strong></td>
+                        <td class="stat-value money">$815,779</td>
+                        <td class="stat-value money">$166,005</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Lyman Rarick</td>
+                        <td class="sits-count">26</td>
+                        <td class="assigns-count">39</td>
+                        <td class="total-count">65</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">40.0%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kyle Kozlansky, Cody Veibell</td>
+                        <td class="sits-count">24</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">32</td>
+                        <td class="total-count">16</td>
+                        <td><strong style="color: #667eea;">75.0%</strong></td>
+                        <td class="stat-value money">$767,792</td>
+                        <td class="stat-value money">$156,240</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jacob Cole Eilers</td>
+                        <td class="sits-count">23</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">31</td>
+                        <td class="total-count">11</td>
+                        <td><strong style="color: #667eea;">74.2%</strong></td>
+                        <td class="stat-value money">$527,857</td>
+                        <td class="stat-value money">$107,415</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kyle Kozlansky, Stephanie Tagora</td>
+                        <td class="sits-count">22</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">30</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">73.3%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Keenan Garcia</td>
+                        <td class="sits-count">22</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">27</td>
+                        <td class="total-count">11</td>
+                        <td><strong style="color: #667eea;">81.5%</strong></td>
+                        <td class="stat-value money">$527,857</td>
+                        <td class="stat-value money">$107,415</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mohamad Khaireddine</td>
+                        <td class="sits-count">21</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">29</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">72.4%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jordan jaramillo</td>
+                        <td class="sits-count">20</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">24</td>
+                        <td class="total-count">17</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$815,779</td>
+                        <td class="stat-value money">$166,005</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Codi Hayes</td>
+                        <td class="sits-count">17</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">24</td>
+                        <td class="total-count">15</td>
+                        <td><strong style="color: #667eea;">70.8%</strong></td>
+                        <td class="stat-value money">$719,805</td>
+                        <td class="stat-value money">$146,475</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Michael Halona</td>
+                        <td class="sits-count">16</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">23</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">69.6%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">codyyaney@gmail.com</td>
+                        <td class="sits-count">16</td>
+                        <td class="assigns-count">16</td>
+                        <td class="total-count">32</td>
+                        <td class="total-count">18</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$863,766</td>
+                        <td class="stat-value money">$175,770</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jeff Barlow</td>
+                        <td class="sits-count">16</td>
+                        <td class="assigns-count">17</td>
+                        <td class="total-count">33</td>
+                        <td class="total-count">9</td>
+                        <td><strong style="color: #667eea;">48.5%</strong></td>
+                        <td class="stat-value money">$431,883</td>
+                        <td class="stat-value money">$87,885</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Samuel J</td>
+                        <td class="sits-count">16</td>
+                        <td class="assigns-count">13</td>
+                        <td class="total-count">29</td>
+                        <td class="total-count">14</td>
+                        <td><strong style="color: #667eea;">55.2%</strong></td>
+                        <td class="stat-value money">$671,818</td>
+                        <td class="stat-value money">$136,710</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Deondre Farrier</td>
+                        <td class="sits-count">15</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">18</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Zach</td>
+                        <td class="sits-count">15</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">16</td>
+                        <td class="total-count">9</td>
+                        <td><strong style="color: #667eea;">93.8%</strong></td>
+                        <td class="stat-value money">$431,883</td>
+                        <td class="stat-value money">$87,885</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Devonte Broadway</td>
+                        <td class="sits-count">15</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">21</td>
+                        <td class="total-count">9</td>
+                        <td><strong style="color: #667eea;">71.4%</strong></td>
+                        <td class="stat-value money">$431,883</td>
+                        <td class="stat-value money">$87,885</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Josh Nowell</td>
+                        <td class="sits-count">15</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">21</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">71.4%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Solargoatron@gmail.con</td>
+                        <td class="sits-count">15</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">23</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">65.2%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Tonyspanels11@gmail.com</td>
+                        <td class="sits-count">14</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">17</td>
+                        <td class="total-count">10</td>
+                        <td><strong style="color: #667eea;">82.4%</strong></td>
+                        <td class="stat-value money">$479,870</td>
+                        <td class="stat-value money">$97,650</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Ronald Barbuto</td>
+                        <td class="sits-count">13</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">13</td>
+                        <td class="total-count">7</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$335,909</td>
+                        <td class="stat-value money">$68,355</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">cameron@proluxenergy.com</td>
+                        <td class="sits-count">13</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">19</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">68.4%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">jake.stewart19@gmail.com</td>
+                        <td class="sits-count">13</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">20</td>
+                        <td class="total-count">9</td>
+                        <td><strong style="color: #667eea;">65.0%</strong></td>
+                        <td class="stat-value money">$431,883</td>
+                        <td class="stat-value money">$87,885</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Arthur Ortega </td>
+                        <td class="sits-count">13</td>
+                        <td class="assigns-count">38</td>
+                        <td class="total-count">51</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">25.5%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Moses Setter</td>
+                        <td class="sits-count">12</td>
+                        <td class="assigns-count">76</td>
+                        <td class="total-count">88</td>
+                        <td class="total-count">12</td>
+                        <td><strong style="color: #667eea;">13.6%</strong></td>
+                        <td class="stat-value money">$575,844</td>
+                        <td class="stat-value money">$117,180</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Andrew Frank</td>
+                        <td class="sits-count">12</td>
+                        <td class="assigns-count">10</td>
+                        <td class="total-count">22</td>
+                        <td class="total-count">11</td>
+                        <td><strong style="color: #667eea;">54.5%</strong></td>
+                        <td class="stat-value money">$527,857</td>
+                        <td class="stat-value money">$107,415</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody Yardley</td>
+                        <td class="sits-count">12</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">16</td>
+                        <td class="total-count">6</td>
+                        <td><strong style="color: #667eea;">75.0%</strong></td>
+                        <td class="stat-value money">$287,922</td>
+                        <td class="stat-value money">$58,590</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Joshua Silverstein</td>
+                        <td class="sits-count">12</td>
+                        <td class="assigns-count">21</td>
+                        <td class="total-count">33</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">36.4%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Aryen Wood</td>
+                        <td class="sits-count">12</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">15</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Nick Amy</td>
+                        <td class="sits-count">11</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">17</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">64.7%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Ajkilgore01@gmail.com</td>
+                        <td class="sits-count">11</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">14</td>
+                        <td class="total-count">8</td>
+                        <td><strong style="color: #667eea;">78.6%</strong></td>
+                        <td class="stat-value money">$383,896</td>
+                        <td class="stat-value money">$78,120</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Rockie Beatty</td>
+                        <td class="sits-count">10</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">12</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Keesh</td>
+                        <td class="sits-count">10</td>
+                        <td class="assigns-count">12</td>
+                        <td class="total-count">22</td>
+                        <td class="total-count">10</td>
+                        <td><strong style="color: #667eea;">45.5%</strong></td>
+                        <td class="stat-value money">$479,870</td>
+                        <td class="stat-value money">$97,650</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Brady Mckivitz</td>
+                        <td class="sits-count">10</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">12</td>
+                        <td class="total-count">9</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$431,883</td>
+                        <td class="stat-value money">$87,885</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Solarmandan333@gmail.com</td>
+                        <td class="sits-count">10</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">90.9%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Robert Soderholm, Wyatt Stettler</td>
+                        <td class="sits-count">9</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">14</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">64.3%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Aiden Price</td>
+                        <td class="sits-count">9</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">6</td>
+                        <td><strong style="color: #667eea;">81.8%</strong></td>
+                        <td class="stat-value money">$287,922</td>
+                        <td class="stat-value money">$58,590</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Tristan Lessley</td>
+                        <td class="sits-count">8</td>
+                        <td class="assigns-count">8</td>
+                        <td class="total-count">16</td>
+                        <td class="total-count">8</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$383,896</td>
+                        <td class="stat-value money">$78,120</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Joe Parkinson</td>
+                        <td class="sits-count">8</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">10</td>
+                        <td class="total-count">8</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$383,896</td>
+                        <td class="stat-value money">$78,120</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">TJ Tijani</td>
+                        <td class="sits-count">8</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">8</td>
+                        <td class="total-count">6</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$287,922</td>
+                        <td class="stat-value money">$58,590</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mark</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">7</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Amanda Millhouse</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">63.6%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Afruiz1985@gmail.com</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">10</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">70.0%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">sales@valoasolar.com</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">63.6%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Matthew Kenney</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">15</td>
+                        <td class="total-count">22</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">31.8%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin King, Mccallum Smith</td>
+                        <td class="sits-count">6</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">7</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">85.7%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Edison, Gisselle, Kyle Kozlansky, S.E.E., Sebastian@gosunlite.io, mayra@gosunlite.io, Stephanie Tagora</td>
+                        <td class="sits-count">6</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">6</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Eduardo Atayde</td>
+                        <td class="sits-count">6</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">10</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">60.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin King, Solar Boss</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Miguel</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kenneth Wise</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">frank.schoomaker@gosunlite.io</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">6</td>
+                        <td class="total-count">4</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$191,948</td>
+                        <td class="stat-value money">$39,060</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">bmckivitzbiz@gmail.com</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">6</td>
+                        <td class="total-count">5</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$239,935</td>
+                        <td class="stat-value money">$48,825</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Keith Nielsen</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">10</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Krystal Chandler, Cody Veibell, Kyle Kozlansky</td>
+                        <td class="sits-count">5</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">6</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">83.3%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence, John Haegele</td>
+                        <td class="sits-count">4</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Anahi Mejia</td>
+                        <td class="sits-count">4</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">9</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">44.4%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Unassigned</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">45</td>
+                        <td class="total-count">48</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">6.2%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">! A Podio Admin at Orion, MFSM, S.E.E., Solar Boss</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Connar Brake</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Perrin Barber</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">abraham herrera</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">10</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">30.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jacob Cole Eilers, Cade Adams</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">60.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Eric Falcon</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">9</td>
+                        <td class="total-count">12</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">25.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">spinsolarllc@gmail.com</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">60.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Blair.wright123@gmail.com</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Pjeffrey40@gmail.com</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">6</td>
+                        <td class="total-count">9</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">33.3%</strong></td>
+                        <td class="stat-value money">$143,961</td>
+                        <td class="stat-value money">$29,295</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Stephane Turner</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">5</td>
+                        <td class="total-count">8</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">37.5%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Moroni</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">60.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Robert Wilkes</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">12</td>
+                        <td class="total-count">15</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">20.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Brothersprite@yahoo.com</td>
+                        <td class="sits-count">3</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">7</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">42.9%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mark, Bryan Alcaraz</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kyle Kozlansky</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cooper Perkins, jordan jaramillo</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Justin Herbert</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Julian Pimentel</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">4</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Joshua King</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">zach.callahan@gosunlite.io</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Frank</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">S.E.E.</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">40.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">johnflowers777@gmail.com</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">aleclowry24@gmail.com</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">40.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Isaac Burnside</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jack Lacy</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">40.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Michigan.solsolar@gmail.com</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Gabe</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mark Ramirez - OWE</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jake Vogel</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Eylan</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">21</td>
+                        <td class="total-count">23</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">8.7%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Krystal Chandler, Kyle Kozlansky, Cody Veibell</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">4</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody britton</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$95,974</td>
+                        <td class="stat-value money">$19,530</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Joshua Wasielczyk</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">66.7%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">James King, James King, MFSM</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt Stettler, Robert Soderholm, MFSM</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin King, Austin@elevateyouenterprise.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">klarkken13@gmail.com, Mccallum Smith, Austin King</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jordan jaramillo, jordan jaramillo, Cooper Perkins, Cooperp1413@gmail.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jordan jaramillo, Cooper Perkins</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody yardley, coyardley@gmail.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Damian Torres</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Hunter</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Luis</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">lumane941+gs@gmail.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Henry Sherman</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Moehoe Msr Rep</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Ryan schoeneman</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Brandon Brown</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Sean Hazelton</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">oscar@brightsun.solar, mikesuchy@brightsun.solar</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">mikesuchy@brightsun.solar, oscar@brightsun.solar</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Sunny@alphasolardfw.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Lsucajunboy1@gmail.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Epochpest@gmail.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Wyatt@solq.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jose Cuevas</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">33.3%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Steve reynolds</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">AJ MAK</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">4</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">25.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Jeramie Rose</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody Veibell, Kyle Kozlansky, Krystal Chandler</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Robert Soderholm, Sondra Calisi</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Sondra Calisi</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">50.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence, Sondra Calisi, Robert Soderholm</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Krystal Chandler, Cody Veibell, Kyle Kozlansky, Cody.v@suntria.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Arthur Ortega , Brothersprite@yahoo.com</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Austin@elevateyouenterprise.com, Austin King, Mccallum Smith</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$47,987</td>
+                        <td class="stat-value money">$9,765</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">franks220v@gmail.com</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">S.E.E., Moehoe Msr Rep</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Johnflowers777@gmail.con</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">3</td>
+                        <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Danielnelson333iii@gmail.com</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Shadrach Ennis</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Mike Powell</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Taylorthompson.solar@gmail.com</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">vic@bigdogsolar.com</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Drew Rynberg</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody Veibell, Krystal Chandler, Kyle Kozlansky</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Cody Veibell, Kyle Kozlansky</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Michael</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">0.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-banner" style="margin-top: 30px;">
+            <p><strong>ℹ️ Dashboard Information:</strong></p>
+            <p>• <strong>Sits:</strong> Appointments marked as "Yes" or "Reset by Closer" in the Sit field</p>
+            <p>• <strong>Assigns:</strong> All other appointments (appointments that did not result in a sit)</p>
+            <p>• <strong>Closes:</strong> Appointments with "Closed" or "Sold" status</p>
+            <p>• <strong>Revenue per Close:</strong> ${REVENUE_PER_CLOSE:,}</p>
+            <p>• <strong>Profit per Close:</strong> ${PROFIT_PER_CLOSE:,}</p>
+            <p>• <strong>Excluded:</strong> {totals['excluded_infinit_ai']} Infinit AI appointments (not counted)</p>
+            <p>• <strong>Total Appointments:</strong> {totals['total_appointments']} (after exclusions)</p>
+        </div>
+    </div>
+
+    <script>
+        // Next refresh calculator and countdown timer
+        function updateRefreshInfo() {
+            const now = new Date();
+            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+            let nextRefreshHour = null;
+            const currentHour = now.getHours();
+
+            for (let hour of cronTimes) {
+                if (hour > currentHour) {
+                    nextRefreshHour = hour;
+                    break;
+                }
+            }
+
+            const nextRefresh = new Date(now);
+            if (nextRefreshHour === null) {
+                nextRefresh.setDate(nextRefresh.getDate() + 1);
+                nextRefreshHour = cronTimes[0];
+            }
+            nextRefresh.setHours(nextRefreshHour, 0, 0, 0);
+
+            const diff = nextRefresh - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+            const timeStr = nextRefresh.toLocaleTimeString('en-US', options);
+
+            document.getElementById('nextRefresh').textContent = 'Next refresh: ' + timeStr;
+            document.getElementById('countdown').textContent = 'Time until: ' + hours + 'h ' + minutes + 'm';
+        }
+
+        updateRefreshInfo();
+        setInterval(updateRefreshInfo, 1000);
+    </script>
+</body>
+</html>
