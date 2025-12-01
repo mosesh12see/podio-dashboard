@@ -3,8 +3,6 @@
 <head>
     <title>Complete Podio Dashboard - Sits & Assigns</title>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAFTElEQVR4nO3d224cRRCA4erVvgrnQARBvAOn25wch0RISNkFeWf2njdYJ/buLOIFSLjkGBISIOIerji/AS/RaLxR5BBXcEi8VdX9f+q7RO7pmnJXd+94Nr334d8CHGQoOR/4D8CAEEAzFGHmwMGG5AY0lBWoKCtQMXNAxVYWKmYOqEgOqCgrUA2T/m+oHFtZqFhzQMXxOVSUFagoK1CxlYWKmQMqkgMqFqRQsZWFaph4ThAK1hxQUVagYkEKFWUFKmYOqFhzQEVZgYqyAhVlBSpmDqh4+hwqFqRQ8SQYVMwcULEghYqtLFRDqdVy9tTh//No+pfUJ11q/5A6LGdPP6kfNZr+KRUoPzmeYE7UliXpUvO7lGi5/cw6uxuV+DtWYHKsOS0KTpE0Kig5Oru02G9cSoqk0eQ3ia+7/Kw4M47/Wxc+ORymRTEpMth7MX7U5jwz5G7u5qAtjSa/SkDd5ecklHETb4YeWGfn/2nhMkNW2Wwdt0dt8cpKdyVeZqzsXXkO1NJo6xcJorvyvBRhHKSUD/rveIvQiskMWWW5dTwP02I87NPtvCBl6SKMKEByhIhjkePyviD1H8HHsTe67LYNUha3rds5JqXrdo6Zx1lrPEPqQRaX/K45FrsvSh0WXkfqNDncxquq8Xo85/AZqaPWj9o68iHPOWDC3VZ2MX9JarXox+5pK2t9Afe1xfy41G0xP25+F+41ygoilJXFovZpY2UvDk7KCqBI749+Egfm3cvWl+DLB+OfrS+BNQd0LsoK04bPmPDaJ8dyrn3mmC9fsb4Ep+bWkeEje+dy1TMH3DI+Pp8vT1hHwLX58oTh3aGs+JetOqaswOXDPvOPXtUvDHf1UTK6QbwYP4Bk1C9lBSoWpCFkk155vXUEubKHfXY/fs1mxAHt9rEyuEesOaCirASRDfpkQRpFXn+XlBWomDmiyOvvkjVHENmgT47PY0gWnVJWosjr75KyEkQ26JOZI4q8/i7ZykJFckDFHzUFkSkr8MTsI/utd3+0HnsYW32sDO4RW9kIsk23LEih4pwjhGzSK5+tBJAq/KOmycU7RqOOZHLxjtUNYs0BFckBry/Gn1z4Qb82SB8fu7vDzAEVW1nnsmHf9jPH5ML31pfg1MQ6MhyfO5aN+3fxYvzJO98Zh8GfSR8T4/tiX1bg1iDl7KE1529bh8KR5vxt8zuS2MriIRyVFSYPb3HgnMOhLD74+gLAZvOW1K3ZvGV+F+41F1vZ/a3Z/FZq1fRjz36aozUHvPGYHHVOHg5H7fG77CXn5txNqUlz7qZ5zCN9ZF9PfjReR8pW1oMsLg1SFret3bghpWs3bpjHWWt+y8pK2fnR+h6du3OOB1u78Y2UqO3HZR/e8Occ5eVHG2FETreyD7b27HUpRXv2unk8D9NSc+ZrCWX7k9clrDZUiscoK3HjG/rKw5SV+0pMtNlORPprto7bo5eV019JWNtX3xD32oCpHGYr+7Bd7hnvmd32V5iDttSc/lLi2776pjjTuk/c/5TaUyUkx8rsmosUmUau1Pul9tQXUpbZtbesup4WMQ2XnBwmKTItKy1WUnvycyna7NO3j+6HTwv91aolOY4iS6ZF50SNyfE4uTKtIxv+JbUnP7O+BjjF+zmg4hlSFPSpLNaGsgIVZQUqXowPFTMHVKw5oGK3AhVlBSrKClTMHFCx5oCK5ICK77KHipkDqmHq/3wFOABbWagoK1BxzgEVMwdUbGWhYuaAiuSAirICFTMHVGxloeLpc6g4PoeKsgIVC1Ko2MpCxcwBFckBFQtSqNjKQsXMARVrDojmHyA8lo6eU51fAAAAAElFTkSuQmCC">
-    <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAFTElEQVR4nO3d224cRRCA4erVvgrnQARBvAOn25wch0RISNkFeWf2njdYJ/buLOIFSLjkGBISIOIerji/AS/RaLxR5BBXcEi8VdX9f+q7RO7pmnJXd+94Nr334d8CHGQoOR/4D8CAEEAzFGHmwMGG5AY0lBWoKCtQMXNAxVYWKmYOqEgOqCgrUA2T/m+oHFtZqFhzQMXxOVSUFagoK1CxlYWKmQMqkgMqFqRQsZWFaph4ThAK1hxQUVagYkEKFWUFKmYOqFhzQEVZgYqyAhVlBSpmDqh4+hwqFqRQ8SQYVMwcULEghYqtLFRDqdVy9tTh//No+pfUJ11q/5A6LGdPP6kfNZr+KRUoPzmeYE7UliXpUvO7lGi5/cw6uxuV+DtWYHKsOS0KTpE0Kig5Oru02G9cSoqk0eQ3ia+7/Kw4M47/Wxc+ORymRTEpMth7MX7U5jwz5G7u5qAtjSa/SkDd5ecklHETb4YeWGfn/2nhMkNW2Wwdt0dt8cpKdyVeZqzsXXkO1NJo6xcJorvyvBRhHKSUD/rveIvQiskMWWW5dTwP02I87NPtvCBl6SKMKEByhIhjkePyviD1H8HHsTe67LYNUha3rds5JqXrdo6Zx1lrPEPqQRaX/K45FrsvSh0WXkfqNDncxquq8Xo85/AZqaPWj9o68iHPOWDC3VZ2MX9JarXox+5pK2t9Afe1xfy41G0xP25+F+41ygoilJXFovZpY2UvDk7KCqBI749+Egfm3cvWl+DLB+OfrS+BNQd0LsoK04bPmPDaJ8dyrn3mmC9fsb4Ep+bWkeEje+dy1TMH3DI+Pp8vT1hHwLX58oTh3aGs+JetOqaswOXDPvOPXtUvDHf1UTK6QbwYP4Bk1C9lBSoWpCFkk155vXUEubKHfXY/fs1mxAHt9rEyuEesOaCirASRDfpkQRpFXn+XlBWomDmiyOvvkjVHENmgT47PY0gWnVJWosjr75KyEkQ26JOZI4q8/i7ZykJFckDFHzUFkSkr8MTsI/utd3+0HnsYW32sDO4RW9kIsk23LEih4pwjhGzSK5+tBJAq/KOmycU7RqOOZHLxjtUNYs0BFckBry/Gn1z4Qb82SB8fu7vDzAEVW1nnsmHf9jPH5ML31pfg1MQ6MhyfO5aN+3fxYvzJO98Zh8GfSR8T4/tiX1bg1iDl7KE1529bh8KR5vxt8zuS2MriIRyVFSYPb3HgnMOhLD74+gLAZvOW1K3ZvGV+F+41F1vZ/a3Z/FZq1fRjz36aozUHvPGYHHVOHg5H7fG77CXn5txNqUlz7qZ5zCN9ZF9PfjReR8pW1oMsLg1SFret3bghpWs3bpjHWWt+y8pK2fnR+h6du3OOB1u78Y2UqO3HZR/e8Occ5eVHG2FETreyD7b27HUpRXv2unk8D9NSc+ZrCWX7k9clrDZUiscoK3HjG/rKw5SV+0pMtNlORPprto7bo5eV019JWNtX3xD32oCpHGYr+7Bd7hnvmd32V5iDttSc/lLi2776pjjTuk/c/5TaUyUkx8rsmosUmUau1Pul9tQXUpbZtbesup4WMQ2XnBwmKTItKy1WUnvycyna7NO3j+6HTwv91aolOY4iS6ZF50SNyfE4uTKtIxv+JbUnP7O+BjjF+zmg4hlSFPSpLNaGsgIVZQUqXowPFTMHVKw5oGK3AhVlBSrKClTMHFCx5oCK5ICK77KHipkDqmHq/3wFOABbWagoK1BxzgEVMwdUbGWhYuaAiuSAirICFTMHVGxloeLpc6g4PoeKsgIVC1Ko2MpCxcwBFckBFQtSqNjKQsXMARVrDojmHyA8lo6eU51fAAAAAElFTkSuQmCC">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -177,8 +175,8 @@
         <div class="header">
             <h1>📊 Complete Podio Dashboard</h1>
             <p>All Sits & Assigns by Manager (Excluding Infinit AI)</p>
-            <p style="font-size: 0.9em; opacity: 0.8;">Last Updated: 2025-11-21T15:08:31.056172</p>
-            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">Generated: November 21, 2025 at 03:42 PM</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">Last Updated: 2025-11-27T12:03:27.468467</p>
+            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">Generated: November 28, 2025 at 09:16 AM</p>
             <p style="font-size: 0.75em; opacity: 0.6; margin-top: 5px; font-style: italic;">cron job: hourly from 8am to 8pm</p>
         </div>
 
@@ -195,29 +193,15 @@
             <div class="monthly-grid">
 
                 <div class="month-card">
-                    <h3>December 2024</h3>
-                    <div class="total">344</div>
-                    <div class="breakdown">
-                        165 sits • 179 assigns<br>
-                        104 closes (30.2%)<br>
-                        <span style="color: #00ff88;">Avg: 38.1 sits/week</span><br>
-                        Sit Rev: $90,750 | Close Rev: $240,656<br>
-                        <strong>Total: $331,406</strong><br>
-                        <strong>Profit: $273,656</strong>
-                        
-                    </div>
-                </div>
-
-                <div class="month-card">
                     <h3>January 2025</h3>
                     <div class="total">347</div>
                     <div class="breakdown">
                         171 sits • 176 assigns<br>
                         98 closes (28.2%)<br>
                         <span style="color: #00ff88;">Avg: 39.5 sits/week</span><br>
-                        Sit Rev: $94,050 | Close Rev: $226,772<br>
-                        <strong>Total: $320,822</strong><br>
-                        <strong>Profit: $260,972</strong>
+                        Sit Rev: $94,050 | Close Rev: $4,073,370<br>
+                        <strong>Total: $4,167,420</strong><br>
+                        <strong>Profit: $369,654</strong>
                         
                     </div>
                 </div>
@@ -229,9 +213,9 @@
                         166 sits • 113 assigns<br>
                         112 closes (40.1%)<br>
                         <span style="color: #00ff88;">Avg: 38.3 sits/week</span><br>
-                        Sit Rev: $91,300 | Close Rev: $259,168<br>
-                        <strong>Total: $350,468</strong><br>
-                        <strong>Profit: $292,368</strong>
+                        Sit Rev: $91,300 | Close Rev: $4,655,280<br>
+                        <strong>Total: $4,746,580</strong><br>
+                        <strong>Profit: $416,576</strong>
                         
                     </div>
                 </div>
@@ -243,9 +227,9 @@
                         269 sits • 165 assigns<br>
                         205 closes (47.2%)<br>
                         <span style="color: #00ff88;">Avg: 62.1 sits/week</span><br>
-                        Sit Rev: $147,950 | Close Rev: $474,370<br>
-                        <strong>Total: $622,320</strong><br>
-                        <strong>Profit: $528,170</strong>
+                        Sit Rev: $147,950 | Close Rev: $8,520,825<br>
+                        <strong>Total: $8,668,775</strong><br>
+                        <strong>Profit: $755,515</strong>
                         
                     </div>
                 </div>
@@ -257,9 +241,9 @@
                         254 sits • 159 assigns<br>
                         186 closes (45.0%)<br>
                         <span style="color: #00ff88;">Avg: 58.7 sits/week</span><br>
-                        Sit Rev: $139,700 | Close Rev: $430,404<br>
-                        <strong>Total: $570,104</strong><br>
-                        <strong>Profit: $481,204</strong>
+                        Sit Rev: $139,700 | Close Rev: $7,731,090<br>
+                        <strong>Total: $7,870,790</strong><br>
+                        <strong>Profit: $687,478</strong>
                         
                     </div>
                 </div>
@@ -271,9 +255,9 @@
                         207 sits • 127 assigns<br>
                         156 closes (46.7%)<br>
                         <span style="color: #00ff88;">Avg: 47.8 sits/week</span><br>
-                        Sit Rev: $113,850 | Close Rev: $360,984<br>
-                        <strong>Total: $474,834</strong><br>
-                        <strong>Profit: $402,384</strong>
+                        Sit Rev: $113,850 | Close Rev: $6,484,140<br>
+                        <strong>Total: $6,597,990</strong><br>
+                        <strong>Profit: $575,388</strong>
                         
                     </div>
                 </div>
@@ -285,9 +269,9 @@
                         213 sits • 111 assigns<br>
                         169 closes (52.2%)<br>
                         <span style="color: #00ff88;">Avg: 49.2 sits/week</span><br>
-                        Sit Rev: $117,150 | Close Rev: $391,066<br>
-                        <strong>Total: $508,216</strong><br>
-                        <strong>Profit: $433,666</strong>
+                        Sit Rev: $117,150 | Close Rev: $7,024,485<br>
+                        <strong>Total: $7,141,635</strong><br>
+                        <strong>Profit: $621,087</strong>
                         
                     </div>
                 </div>
@@ -299,23 +283,37 @@
                         257 sits • 129 assigns<br>
                         211 closes (54.7%)<br>
                         <span style="color: #00ff88;">Avg: 59.4 sits/week</span><br>
-                        Sit Rev: $141,350 | Close Rev: $488,254<br>
-                        <strong>Total: $629,604</strong><br>
-                        <strong>Profit: $539,654</strong>
+                        Sit Rev: $141,350 | Close Rev: $8,770,215<br>
+                        <strong>Total: $8,911,565</strong><br>
+                        <strong>Profit: $773,653</strong>
+                        
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h3>July 2025</h3>
+                    <div class="total">386</div>
+                    <div class="breakdown">
+                        257 sits • 129 assigns<br>
+                        211 closes (54.7%)<br>
+                        <span style="color: #00ff88;">Avg: 59.4 sits/week</span><br>
+                        Sit Rev: $141,350 | Close Rev: $8,770,215<br>
+                        <strong>Total: $8,911,565</strong><br>
+                        <strong>Profit: $773,653</strong>
                         
                     </div>
                 </div>
 
                 <div class="month-card">
                     <h3>August 2025</h3>
-                    <div class="total">414</div>
+                    <div class="total">415</div>
                     <div class="breakdown">
-                        278 sits • 136 assigns<br>
-                        135 closes (32.6%)<br>
+                        278 sits • 137 assigns<br>
+                        135 closes (32.5%)<br>
                         <span style="color: #00ff88;">Avg: 64.2 sits/week</span><br>
-                        Sit Rev: $152,900 | Close Rev: $312,390<br>
-                        <strong>Total: $465,290</strong><br>
-                        <strong>Profit: $367,990</strong>
+                        Sit Rev: $152,900 | Close Rev: $5,611,275<br>
+                        <strong>Total: $5,764,175</strong><br>
+                        <strong>Profit: $517,705</strong>
                         
                     </div>
                 </div>
@@ -324,41 +322,41 @@
                     <h3>September 2025</h3>
                     <div class="total">315</div>
                     <div class="breakdown">
-                        210 sits • 105 assigns<br>
+                        209 sits • 106 assigns<br>
                         65 closes (20.6%)<br>
-                        <span style="color: #00ff88;">Avg: 48.5 sits/week</span><br>
-                        Sit Rev: $115,500 | Close Rev: $150,410<br>
-                        <strong>Total: $265,910</strong><br>
-                        <strong>Profit: $192,410</strong>
+                        <span style="color: #00ff88;">Avg: 48.3 sits/week</span><br>
+                        Sit Rev: $114,950 | Close Rev: $2,701,725<br>
+                        <strong>Total: $2,816,675</strong><br>
+                        <strong>Profit: $264,295</strong>
                         
                     </div>
                 </div>
 
                 <div class="month-card">
                     <h3>October 2025</h3>
-                    <div class="total">296</div>
+                    <div class="total">295</div>
                     <div class="breakdown">
-                        191 sits • 105 assigns<br>
+                        190 sits • 105 assigns<br>
                         60 closes (20.3%)<br>
-                        <span style="color: #00ff88;">Avg: 44.1 sits/week</span><br>
-                        Sit Rev: $105,050 | Close Rev: $138,840<br>
-                        <strong>Total: $243,890</strong><br>
-                        <strong>Profit: $177,040</strong>
+                        <span style="color: #00ff88;">Avg: 43.9 sits/week</span><br>
+                        Sit Rev: $104,500 | Close Rev: $2,493,900<br>
+                        <strong>Total: $2,598,400</strong><br>
+                        <strong>Profit: $243,380</strong>
                         
                     </div>
                 </div>
 
                 <div class="month-card">
                     <h3>November 2025</h3>
-                    <div class="total">205</div>
+                    <div class="total">250</div>
                     <div class="breakdown">
-                        115 sits • 90 assigns<br>
-                        49 closes (23.9%)<br>
-                        <span style="color: #00ff88;">Avg: 37.9 sits/week</span><br>
-                        Sit Rev: $63,250 | Close Rev: $113,386<br>
-                        <strong>Total: $176,636</strong><br>
-                        <strong>Profit: $136,386</strong>
-                        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2);"><strong style="color: #00d4ff;">Projected: 293</strong><br><span style="font-size: 11px; opacity: 0.7;">Based on current pace</span></div>
+                        139 sits • 111 assigns<br>
+                        60 closes (24.0%)<br>
+                        <span style="color: #00ff88;">Avg: 34.4 sits/week</span><br>
+                        Sit Rev: $76,450 | Close Rev: $2,493,900<br>
+                        <strong>Total: $2,570,350</strong><br>
+                        <strong>Profit: $233,180</strong>
+                        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2);"><strong style="color: #00d4ff;">Projected: 268</strong><br><span style="font-size: 11px; opacity: 0.7;">Based on current pace</span></div>
                     </div>
                 </div>
 
@@ -371,57 +369,57 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>WTD Total</h3>
-                    <div class="number">69</div>
-                    <div class="breakdown">26 sits • 43 assigns • 10 closes</div>
+                    <div class="number">42</div>
+                    <div class="breakdown">19 sits • 23 assigns • 6 closes</div>
                 </div>
                 <div class="stat-card">
                     <h3>WTD Close Rate</h3>
-                    <div class="number">14.5%</div>
-                    <div class="breakdown">10 closes this week</div>
+                    <div class="number">14.3%</div>
+                    <div class="breakdown">6 closes this week</div>
                 </div>
                 <div class="stat-card">
                     <h3>WTD Revenue</h3>
-                    <div class="number">$479,870</div>
-                    <div class="breakdown">Profit: $97,650</div>
+                    <div class="number">$249,390</div>
+                    <div class="breakdown">Profit: $20,538</div>
                 </div>
                 <div class="stat-card">
                     <h3>MTD Total</h3>
-                    <div class="number">206</div>
-                    <div class="breakdown">115 sits • 91 assigns • 49 closes</div>
+                    <div class="number">253</div>
+                    <div class="breakdown">139 sits • 114 assigns • 60 closes</div>
                 </div>
                 <div class="stat-card">
                     <h3>MTD Close Rate</h3>
-                    <div class="number">23.8%</div>
-                    <div class="breakdown">49 closes this month</div>
+                    <div class="number">23.7%</div>
+                    <div class="breakdown">60 closes this month</div>
                 </div>
                 <div class="stat-card">
                     <h3>MTD Revenue</h3>
-                    <div class="number">$2,351,363</div>
-                    <div class="breakdown">Profit: $478,485</div>
+                    <div class="number">$2,493,900</div>
+                    <div class="breakdown">Profit: $205,380</div>
                 </div>
                 <div class="stat-card">
                     <h3>MTD Pacing</h3>
-                    <div class="number">294 appts</div>
-                    <div class="breakdown">Avg: 9.8/day • 9 days left</div>
+                    <div class="number">271 appts</div>
+                    <div class="breakdown">Avg: 9.0/day • 2 days left</div>
                 </div>
                 <div class="stat-card">
                     <h3>YTD Total</h3>
-                    <div class="number">3748</div>
-                    <div class="breakdown">2331 sits • 1417 assigns • 1446 closes</div>
+                    <div class="number">3795</div>
+                    <div class="breakdown">2353 sits • 1442 assigns • 1457 closes</div>
                 </div>
                 <div class="stat-card">
                     <h3>YTD Close Rate</h3>
-                    <div class="number">38.6%</div>
-                    <div class="breakdown">1446 closes this year</div>
+                    <div class="number">38.4%</div>
+                    <div class="breakdown">1457 closes this year</div>
                 </div>
                 <div class="stat-card">
                     <h3>YTD Revenue</h3>
-                    <div class="number">$69,389,202</div>
-                    <div class="breakdown">Profit: $14,120,190</div>
+                    <div class="number">$60,560,205</div>
+                    <div class="breakdown">Profit: $4,987,311</div>
                 </div>
                 <div class="stat-card">
                     <h3>YTD Sit Rate</h3>
-                    <div class="number">62.5%</div>
+                    <div class="number">62.1%</div>
                     <div class="breakdown">Percentage of sits (excl. today)</div>
                 </div>
             </div>
@@ -429,13 +427,56 @@
 
         <!-- Low Performers Alert Section (Last 14 Days) -->
 
+        <div class="section" style="background: linear-gradient(135deg, #8b0000 0%, #5c0a0a 100%); color: white; border: 2px solid #4a0000; padding: 15px; margin-bottom: 20px;">
+            <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3); font-size: 1.3em; margin-bottom: 12px; padding-bottom: 8px;">⚠️ Low Sit Rate Alert (Last 14 Days)</h2>
+            <p style="margin-bottom: 12px; opacity: 0.9; font-size: 0.85em;">Managers with 3+ sits and sit rate under 50% in the last 14 days (excluding today):</p>
+            <table>
+                <thead>
+                    <tr style="background: rgba(0,0,0,0.4);">
+                        <th style="padding: 10px; font-size: 0.75em;">Manager</th>
+                        <th style="padding: 10px; font-size: 0.75em;">Sits</th>
+                        <th style="padding: 10px; font-size: 0.75em;">Assigns</th>
+                        <th style="padding: 10px; font-size: 0.75em;">Total</th>
+                        <th style="padding: 10px; font-size: 0.75em;">Sit Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr style="background: rgba(255,255,255,0.05);">
+                        <td class="manager-name" style="color: white; padding: 10px; font-size: 0.95em;">Austin King, Solar Boss</td>
+                        <td class="sits-count" style="color: #ffd700; padding: 10px;">3</td>
+                        <td class="assigns-count" style="color: #87ceeb; padding: 10px;">7</td>
+                        <td class="total-count" style="color: white; padding: 10px;">10</td>
+                        <td style="color: #ff6b6b; font-weight: bold; font-size: 1em; padding: 10px;">30.0%</td>
+                    </tr>
+
+                    <tr style="background: rgba(255,255,255,0.05);">
+                        <td class="manager-name" style="color: white; padding: 10px; font-size: 0.95em;">Wyatt Stettler, Robert Soderholm</td>
+                        <td class="sits-count" style="color: #ffd700; padding: 10px;">9</td>
+                        <td class="assigns-count" style="color: #87ceeb; padding: 10px;">12</td>
+                        <td class="total-count" style="color: white; padding: 10px;">21</td>
+                        <td style="color: #ff6b6b; font-weight: bold; font-size: 1em; padding: 10px;">42.9%</td>
+                    </tr>
+
+                    <tr style="background: rgba(255,255,255,0.05);">
+                        <td class="manager-name" style="color: white; padding: 10px; font-size: 0.95em;">John Flowers</td>
+                        <td class="sits-count" style="color: #ffd700; padding: 10px;">14</td>
+                        <td class="assigns-count" style="color: #87ceeb; padding: 10px;">17</td>
+                        <td class="total-count" style="color: white; padding: 10px;">31</td>
+                        <td style="color: #ff6b6b; font-weight: bold; font-size: 1em; padding: 10px;">45.2%</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
         <!-- WTD Section -->
         <div class="section">
             <h2 style="display: flex; justify-content: space-between; align-items: center;">
                 <span>📅 Week to Date (WTD)</span>
                 <span style="font-size: 0.6em; font-weight: normal; color: #888;">
-                    Total: 26 sits • 22 assigns •
-                    <strong style="color: #667eea;">Avg Sit Rate: 54.2%</strong>
+                    Total: 19 sits • 19 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 50.0%</strong>
                 </span>
             </h2>
             <table>
@@ -455,64 +496,75 @@
 
                     <tr>
                         <td class="manager-name">MFSM, Solar Boss</td>
-                        <td class="sits-count">16</td>
-                        <td class="assigns-count">17</td>
-                        <td class="total-count">33</td>
-                        <td class="total-count">7</td>
-                        <td><strong style="color: #667eea;">69.6%</strong></td>
-                        <td class="stat-value money">$335,909</td>
-                        <td class="stat-value money">$68,355</td>
+                        <td class="sits-count">9</td>
+                        <td class="assigns-count">10</td>
+                        <td class="total-count">19</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">56.2%</strong></td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
-                        <td class="manager-name">John Flowers</td>
-                        <td class="sits-count">5</td>
-                        <td class="assigns-count">9</td>
-                        <td class="total-count">14</td>
+                        <td class="manager-name">John Flowers, Kyle Donohue</td>
+                        <td class="sits-count">4</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">5</td>
                         <td class="total-count">2</td>
-                        <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
-                        <td class="sits-count">3</td>
-                        <td class="assigns-count">10</td>
-                        <td class="total-count">13</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">6</td>
                         <td class="total-count">0</td>
-                        <td><strong style="color: #667eea;">30.0%</strong></td>
+                        <td><strong style="color: #667eea;">33.3%</strong></td>
                         <td class="stat-value money">$0</td>
                         <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="sits-count">2</td>
+                        <td class="assigns-count">0</td>
+                        <td class="total-count">2</td>
+                        <td class="total-count">1</td>
+                        <td><strong style="color: #667eea;">100.0%</strong></td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Kiri Clemence</td>
                         <td class="sits-count">1</td>
-                        <td class="assigns-count">0</td>
-                        <td class="total-count">1</td>
-                        <td class="total-count">1</td>
-                        <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">Olashawan Miller</td>
-                        <td class="sits-count">1</td>
-                        <td class="assigns-count">0</td>
-                        <td class="total-count">1</td>
-                        <td class="total-count">0</td>
-                        <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$0</td>
-                        <td class="stat-value money">$0</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">Austin King, Solar Boss</td>
-                        <td class="sits-count">0</td>
-                        <td class="assigns-count">3</td>
+                        <td class="assigns-count">2</td>
                         <td class="total-count">3</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">33.3%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">John Flowers</td>
+                        <td class="sits-count">1</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">0</td>
+                        <td><strong style="color: #667eea;">25.0%</strong></td>
+                        <td class="stat-value money">$0</td>
+                        <td class="stat-value money">$0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Unassigned</td>
+                        <td class="sits-count">0</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">1</td>
                         <td class="total-count">0</td>
                         <td><strong style="color: #667eea;">0.0%</strong></td>
                         <td class="stat-value money">$0</td>
@@ -521,17 +573,6 @@
 
                     <tr>
                         <td class="manager-name">Walter Zulueta</td>
-                        <td class="sits-count">0</td>
-                        <td class="assigns-count">3</td>
-                        <td class="total-count">3</td>
-                        <td class="total-count">0</td>
-                        <td><strong style="color: #667eea;">0.0%</strong></td>
-                        <td class="stat-value money">$0</td>
-                        <td class="stat-value money">$0</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">MFSM</td>
                         <td class="sits-count">0</td>
                         <td class="assigns-count">1</td>
                         <td class="total-count">1</td>
@@ -550,8 +591,8 @@
             <h2 style="display: flex; justify-content: space-between; align-items: center;">
                 <span>📅 Month to Date (MTD)</span>
                 <span style="font-size: 0.6em; font-weight: normal; color: #888;">
-                    Total: 115 sits • 70 assigns •
-                    <strong style="color: #667eea;">Avg Sit Rate: 62.2%</strong>
+                    Total: 139 sits • 110 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 55.8%</strong>
                 </span>
             </h2>
             <table>
@@ -571,35 +612,46 @@
 
                     <tr>
                         <td class="manager-name">MFSM, Solar Boss</td>
-                        <td class="sits-count">33</td>
-                        <td class="assigns-count">24</td>
-                        <td class="total-count">57</td>
-                        <td class="total-count">16</td>
-                        <td><strong style="color: #667eea;">70.2%</strong></td>
-                        <td class="stat-value money">$767,792</td>
-                        <td class="stat-value money">$156,240</td>
+                        <td class="sits-count">43</td>
+                        <td class="assigns-count">35</td>
+                        <td class="total-count">78</td>
+                        <td class="total-count">22</td>
+                        <td><strong style="color: #667eea;">57.3%</strong></td>
+                        <td class="stat-value money">$914,430</td>
+                        <td class="stat-value money">$75,306</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
-                        <td class="sits-count">30</td>
-                        <td class="assigns-count">19</td>
-                        <td class="total-count">49</td>
+                        <td class="sits-count">33</td>
+                        <td class="assigns-count">21</td>
+                        <td class="total-count">54</td>
                         <td class="total-count">7</td>
-                        <td><strong style="color: #667eea;">65.2%</strong></td>
-                        <td class="stat-value money">$335,909</td>
-                        <td class="stat-value money">$68,355</td>
+                        <td><strong style="color: #667eea;">61.1%</strong></td>
+                        <td class="stat-value money">$290,955</td>
+                        <td class="stat-value money">$23,961</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">John Flowers</td>
-                        <td class="sits-count">29</td>
-                        <td class="assigns-count">27</td>
-                        <td class="total-count">56</td>
-                        <td class="total-count">13</td>
-                        <td><strong style="color: #667eea;">55.8%</strong></td>
-                        <td class="stat-value money">$623,831</td>
-                        <td class="stat-value money">$126,945</td>
+                        <td class="sits-count">33</td>
+                        <td class="assigns-count">32</td>
+                        <td class="total-count">65</td>
+                        <td class="total-count">14</td>
+                        <td><strong style="color: #667eea;">51.6%</strong></td>
+                        <td class="stat-value money">$581,910</td>
+                        <td class="stat-value money">$47,922</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Kiri Clemence</td>
+                        <td class="sits-count">7</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">11</td>
+                        <td class="total-count">6</td>
+                        <td><strong style="color: #667eea;">63.6%</strong></td>
+                        <td class="stat-value money">$249,390</td>
+                        <td class="stat-value money">$20,538</td>
                     </tr>
 
                     <tr>
@@ -608,42 +660,42 @@
                         <td class="assigns-count">10</td>
                         <td class="total-count">17</td>
                         <td class="total-count">2</td>
-                        <td><strong style="color: #667eea;">46.7%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td><strong style="color: #667eea;">41.2%</strong></td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
-                        <td class="manager-name">Kiri Clemence</td>
+                        <td class="manager-name">Olashawan Miller</td>
                         <td class="sits-count">6</td>
-                        <td class="assigns-count">1</td>
-                        <td class="total-count">7</td>
-                        <td class="total-count">5</td>
-                        <td><strong style="color: #667eea;">85.7%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">8</td>
+                        <td class="total-count">3</td>
+                        <td><strong style="color: #667eea;">75.0%</strong></td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Austin King, Solar Boss</td>
                         <td class="sits-count">5</td>
-                        <td class="assigns-count">6</td>
-                        <td class="total-count">11</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">12</td>
                         <td class="total-count">4</td>
-                        <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td><strong style="color: #667eea;">41.7%</strong></td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
-                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="manager-name">John Flowers, Kyle Donohue</td>
                         <td class="sits-count">4</td>
-                        <td class="assigns-count">2</td>
-                        <td class="total-count">6</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">5</td>
                         <td class="total-count">2</td>
-                        <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -660,19 +712,8 @@
                     <tr>
                         <td class="manager-name">Unassigned</td>
                         <td class="sits-count">0</td>
-                        <td class="assigns-count">1</td>
-                        <td class="total-count">1</td>
-                        <td class="total-count">0</td>
-                        <td><strong style="color: #667eea;">0.0%</strong></td>
-                        <td class="stat-value money">$0</td>
-                        <td class="stat-value money">$0</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">MFSM</td>
-                        <td class="sits-count">0</td>
-                        <td class="assigns-count">1</td>
-                        <td class="total-count">1</td>
+                        <td class="assigns-count">2</td>
+                        <td class="total-count">2</td>
                         <td class="total-count">0</td>
                         <td><strong style="color: #667eea;">0.0%</strong></td>
                         <td class="stat-value money">$0</td>
@@ -688,8 +729,8 @@
             <h2 style="display: flex; justify-content: space-between; align-items: center;">
                 <span>📅 Year to Date (YTD)</span>
                 <span style="font-size: 0.6em; font-weight: normal; color: #888;">
-                    Total: 2331 sits • 1396 assigns •
-                    <strong style="color: #667eea;">Avg Sit Rate: 62.5%</strong>
+                    Total: 2353 sits • 1438 assigns •
+                    <strong style="color: #667eea;">Avg Sit Rate: 62.1%</strong>
                 </span>
             </h2>
             <table>
@@ -714,8 +755,8 @@
                         <td class="total-count">383</td>
                         <td class="total-count">240</td>
                         <td><strong style="color: #667eea;">74.7%</strong></td>
-                        <td class="stat-value money">$11,516,880</td>
-                        <td class="stat-value money">$2,343,600</td>
+                        <td class="stat-value money">$9,975,600</td>
+                        <td class="stat-value money">$821,520</td>
                     </tr>
 
                     <tr>
@@ -724,20 +765,20 @@
                         <td class="assigns-count">206</td>
                         <td class="total-count">490</td>
                         <td class="total-count">168</td>
-                        <td><strong style="color: #667eea;">58.2%</strong></td>
-                        <td class="stat-value money">$8,061,816</td>
-                        <td class="stat-value money">$1,640,520</td>
+                        <td><strong style="color: #667eea;">58.0%</strong></td>
+                        <td class="stat-value money">$6,982,920</td>
+                        <td class="stat-value money">$575,064</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Wyatt Stettler, Robert Soderholm</td>
-                        <td class="sits-count">157</td>
-                        <td class="assigns-count">136</td>
-                        <td class="total-count">293</td>
+                        <td class="sits-count">158</td>
+                        <td class="assigns-count">139</td>
+                        <td class="total-count">297</td>
                         <td class="total-count">46</td>
-                        <td><strong style="color: #667eea;">54.1%</strong></td>
-                        <td class="stat-value money">$2,207,402</td>
-                        <td class="stat-value money">$449,190</td>
+                        <td><strong style="color: #667eea;">53.2%</strong></td>
+                        <td class="stat-value money">$1,911,990</td>
+                        <td class="stat-value money">$157,458</td>
                     </tr>
 
                     <tr>
@@ -747,8 +788,8 @@
                         <td class="total-count">218</td>
                         <td class="total-count">98</td>
                         <td><strong style="color: #667eea;">61.0%</strong></td>
-                        <td class="stat-value money">$4,702,726</td>
-                        <td class="stat-value money">$956,970</td>
+                        <td class="stat-value money">$4,073,370</td>
+                        <td class="stat-value money">$335,454</td>
                     </tr>
 
                     <tr>
@@ -758,8 +799,8 @@
                         <td class="total-count">120</td>
                         <td class="total-count">72</td>
                         <td><strong style="color: #667eea;">72.5%</strong></td>
-                        <td class="stat-value money">$3,455,064</td>
-                        <td class="stat-value money">$703,080</td>
+                        <td class="stat-value money">$2,992,680</td>
+                        <td class="stat-value money">$246,456</td>
                     </tr>
 
                     <tr>
@@ -769,8 +810,8 @@
                         <td class="total-count">124</td>
                         <td class="total-count">64</td>
                         <td><strong style="color: #667eea;">65.3%</strong></td>
-                        <td class="stat-value money">$3,071,168</td>
-                        <td class="stat-value money">$624,960</td>
+                        <td class="stat-value money">$2,660,160</td>
+                        <td class="stat-value money">$219,072</td>
                     </tr>
 
                     <tr>
@@ -780,30 +821,30 @@
                         <td class="total-count">114</td>
                         <td class="total-count">51</td>
                         <td><strong style="color: #667eea;">64.0%</strong></td>
-                        <td class="stat-value money">$2,447,337</td>
-                        <td class="stat-value money">$498,015</td>
+                        <td class="stat-value money">$2,119,815</td>
+                        <td class="stat-value money">$174,573</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Kiri Clemence</td>
-                        <td class="sits-count">63</td>
-                        <td class="assigns-count">28</td>
-                        <td class="total-count">91</td>
-                        <td class="total-count">47</td>
-                        <td><strong style="color: #667eea;">69.2%</strong></td>
-                        <td class="stat-value money">$2,255,389</td>
-                        <td class="stat-value money">$458,955</td>
+                        <td class="sits-count">64</td>
+                        <td class="assigns-count">31</td>
+                        <td class="total-count">95</td>
+                        <td class="total-count">48</td>
+                        <td><strong style="color: #667eea;">67.4%</strong></td>
+                        <td class="stat-value money">$1,995,120</td>
+                        <td class="stat-value money">$164,304</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">John Flowers</td>
-                        <td class="sits-count">47</td>
-                        <td class="assigns-count">32</td>
-                        <td class="total-count">79</td>
-                        <td class="total-count">20</td>
-                        <td><strong style="color: #667eea;">62.7%</strong></td>
-                        <td class="stat-value money">$959,740</td>
-                        <td class="stat-value money">$195,300</td>
+                        <td class="sits-count">51</td>
+                        <td class="assigns-count">37</td>
+                        <td class="total-count">88</td>
+                        <td class="total-count">21</td>
+                        <td><strong style="color: #667eea;">58.6%</strong></td>
+                        <td class="stat-value money">$872,865</td>
+                        <td class="stat-value money">$71,883</td>
                     </tr>
 
                     <tr>
@@ -813,8 +854,19 @@
                         <td class="total-count">59</td>
                         <td class="total-count">31</td>
                         <td><strong style="color: #667eea;">79.7%</strong></td>
-                        <td class="stat-value money">$1,487,597</td>
-                        <td class="stat-value money">$302,715</td>
+                        <td class="stat-value money">$1,288,515</td>
+                        <td class="stat-value money">$106,113</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">MFSM, Solar Boss</td>
+                        <td class="sits-count">43</td>
+                        <td class="assigns-count">35</td>
+                        <td class="total-count">78</td>
+                        <td class="total-count">22</td>
+                        <td><strong style="color: #667eea;">57.3%</strong></td>
+                        <td class="stat-value money">$914,430</td>
+                        <td class="stat-value money">$75,306</td>
                     </tr>
 
                     <tr>
@@ -824,8 +876,8 @@
                         <td class="total-count">47</td>
                         <td class="total-count">26</td>
                         <td><strong style="color: #667eea;">83.0%</strong></td>
-                        <td class="stat-value money">$1,247,662</td>
-                        <td class="stat-value money">$253,890</td>
+                        <td class="stat-value money">$1,080,690</td>
+                        <td class="stat-value money">$88,998</td>
                     </tr>
 
                     <tr>
@@ -835,8 +887,8 @@
                         <td class="total-count">44</td>
                         <td class="total-count">25</td>
                         <td><strong style="color: #667eea;">88.6%</strong></td>
-                        <td class="stat-value money">$1,199,675</td>
-                        <td class="stat-value money">$244,125</td>
+                        <td class="stat-value money">$1,039,125</td>
+                        <td class="stat-value money">$85,575</td>
                     </tr>
 
                     <tr>
@@ -846,19 +898,8 @@
                         <td class="total-count">47</td>
                         <td class="total-count">21</td>
                         <td><strong style="color: #667eea;">72.3%</strong></td>
-                        <td class="stat-value money">$1,007,727</td>
-                        <td class="stat-value money">$205,065</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">MFSM, Solar Boss</td>
-                        <td class="sits-count">33</td>
-                        <td class="assigns-count">24</td>
-                        <td class="total-count">57</td>
-                        <td class="total-count">16</td>
-                        <td><strong style="color: #667eea;">70.2%</strong></td>
-                        <td class="stat-value money">$767,792</td>
-                        <td class="stat-value money">$156,240</td>
+                        <td class="stat-value money">$872,865</td>
+                        <td class="stat-value money">$71,883</td>
                     </tr>
 
                     <tr>
@@ -868,8 +909,19 @@
                         <td class="total-count">53</td>
                         <td class="total-count">21</td>
                         <td><strong style="color: #667eea;">60.4%</strong></td>
-                        <td class="stat-value money">$1,007,727</td>
-                        <td class="stat-value money">$205,065</td>
+                        <td class="stat-value money">$872,865</td>
+                        <td class="stat-value money">$71,883</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">Olashawan Miller</td>
+                        <td class="sits-count">31</td>
+                        <td class="assigns-count">4</td>
+                        <td class="total-count">35</td>
+                        <td class="total-count">19</td>
+                        <td><strong style="color: #667eea;">88.6%</strong></td>
+                        <td class="stat-value money">$789,735</td>
+                        <td class="stat-value money">$65,037</td>
                     </tr>
 
                     <tr>
@@ -879,19 +931,8 @@
                         <td class="total-count">44</td>
                         <td class="total-count">27</td>
                         <td><strong style="color: #667eea;">68.2%</strong></td>
-                        <td class="stat-value money">$1,295,649</td>
-                        <td class="stat-value money">$263,655</td>
-                    </tr>
-
-                    <tr>
-                        <td class="manager-name">Olashawan Miller</td>
-                        <td class="sits-count">29</td>
-                        <td class="assigns-count">4</td>
-                        <td class="total-count">33</td>
-                        <td class="total-count">18</td>
-                        <td><strong style="color: #667eea;">87.9%</strong></td>
-                        <td class="stat-value money">$863,766</td>
-                        <td class="stat-value money">$175,770</td>
+                        <td class="stat-value money">$1,122,255</td>
+                        <td class="stat-value money">$92,421</td>
                     </tr>
 
                     <tr>
@@ -901,8 +942,8 @@
                         <td class="total-count">42</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">69.0%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -911,9 +952,9 @@
                         <td class="assigns-count">3</td>
                         <td class="total-count">29</td>
                         <td class="total-count">8</td>
-                        <td><strong style="color: #667eea;">92.9%</strong></td>
-                        <td class="stat-value money">$383,896</td>
-                        <td class="stat-value money">$78,120</td>
+                        <td><strong style="color: #667eea;">89.7%</strong></td>
+                        <td class="stat-value money">$332,520</td>
+                        <td class="stat-value money">$27,384</td>
                     </tr>
 
                     <tr>
@@ -923,8 +964,8 @@
                         <td class="total-count">33</td>
                         <td class="total-count">17</td>
                         <td><strong style="color: #667eea;">78.8%</strong></td>
-                        <td class="stat-value money">$815,779</td>
-                        <td class="stat-value money">$166,005</td>
+                        <td class="stat-value money">$706,605</td>
+                        <td class="stat-value money">$58,191</td>
                     </tr>
 
                     <tr>
@@ -934,8 +975,8 @@
                         <td class="total-count">65</td>
                         <td class="total-count">4</td>
                         <td><strong style="color: #667eea;">40.0%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
@@ -945,8 +986,8 @@
                         <td class="total-count">32</td>
                         <td class="total-count">16</td>
                         <td><strong style="color: #667eea;">75.0%</strong></td>
-                        <td class="stat-value money">$767,792</td>
-                        <td class="stat-value money">$156,240</td>
+                        <td class="stat-value money">$665,040</td>
+                        <td class="stat-value money">$54,768</td>
                     </tr>
 
                     <tr>
@@ -956,8 +997,8 @@
                         <td class="total-count">31</td>
                         <td class="total-count">11</td>
                         <td><strong style="color: #667eea;">74.2%</strong></td>
-                        <td class="stat-value money">$527,857</td>
-                        <td class="stat-value money">$107,415</td>
+                        <td class="stat-value money">$457,215</td>
+                        <td class="stat-value money">$37,653</td>
                     </tr>
 
                     <tr>
@@ -978,8 +1019,8 @@
                         <td class="total-count">27</td>
                         <td class="total-count">11</td>
                         <td><strong style="color: #667eea;">81.5%</strong></td>
-                        <td class="stat-value money">$527,857</td>
-                        <td class="stat-value money">$107,415</td>
+                        <td class="stat-value money">$457,215</td>
+                        <td class="stat-value money">$37,653</td>
                     </tr>
 
                     <tr>
@@ -989,8 +1030,8 @@
                         <td class="total-count">29</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">72.4%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -1000,8 +1041,8 @@
                         <td class="total-count">24</td>
                         <td class="total-count">17</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$815,779</td>
-                        <td class="stat-value money">$166,005</td>
+                        <td class="stat-value money">$706,605</td>
+                        <td class="stat-value money">$58,191</td>
                     </tr>
 
                     <tr>
@@ -1011,8 +1052,8 @@
                         <td class="total-count">24</td>
                         <td class="total-count">15</td>
                         <td><strong style="color: #667eea;">70.8%</strong></td>
-                        <td class="stat-value money">$719,805</td>
-                        <td class="stat-value money">$146,475</td>
+                        <td class="stat-value money">$623,475</td>
+                        <td class="stat-value money">$51,345</td>
                     </tr>
 
                     <tr>
@@ -1022,8 +1063,8 @@
                         <td class="total-count">23</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">69.6%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1033,8 +1074,8 @@
                         <td class="total-count">32</td>
                         <td class="total-count">18</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$863,766</td>
-                        <td class="stat-value money">$175,770</td>
+                        <td class="stat-value money">$748,170</td>
+                        <td class="stat-value money">$61,614</td>
                     </tr>
 
                     <tr>
@@ -1044,8 +1085,8 @@
                         <td class="total-count">33</td>
                         <td class="total-count">9</td>
                         <td><strong style="color: #667eea;">48.5%</strong></td>
-                        <td class="stat-value money">$431,883</td>
-                        <td class="stat-value money">$87,885</td>
+                        <td class="stat-value money">$374,085</td>
+                        <td class="stat-value money">$30,807</td>
                     </tr>
 
                     <tr>
@@ -1055,8 +1096,8 @@
                         <td class="total-count">29</td>
                         <td class="total-count">14</td>
                         <td><strong style="color: #667eea;">55.2%</strong></td>
-                        <td class="stat-value money">$671,818</td>
-                        <td class="stat-value money">$136,710</td>
+                        <td class="stat-value money">$581,910</td>
+                        <td class="stat-value money">$47,922</td>
                     </tr>
 
                     <tr>
@@ -1066,8 +1107,8 @@
                         <td class="total-count">18</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1077,8 +1118,8 @@
                         <td class="total-count">16</td>
                         <td class="total-count">9</td>
                         <td><strong style="color: #667eea;">93.8%</strong></td>
-                        <td class="stat-value money">$431,883</td>
-                        <td class="stat-value money">$87,885</td>
+                        <td class="stat-value money">$374,085</td>
+                        <td class="stat-value money">$30,807</td>
                     </tr>
 
                     <tr>
@@ -1088,8 +1129,8 @@
                         <td class="total-count">21</td>
                         <td class="total-count">9</td>
                         <td><strong style="color: #667eea;">71.4%</strong></td>
-                        <td class="stat-value money">$431,883</td>
-                        <td class="stat-value money">$87,885</td>
+                        <td class="stat-value money">$374,085</td>
+                        <td class="stat-value money">$30,807</td>
                     </tr>
 
                     <tr>
@@ -1099,8 +1140,8 @@
                         <td class="total-count">21</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">71.4%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -1110,8 +1151,8 @@
                         <td class="total-count">23</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">65.2%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -1121,8 +1162,8 @@
                         <td class="total-count">17</td>
                         <td class="total-count">10</td>
                         <td><strong style="color: #667eea;">82.4%</strong></td>
-                        <td class="stat-value money">$479,870</td>
-                        <td class="stat-value money">$97,650</td>
+                        <td class="stat-value money">$415,650</td>
+                        <td class="stat-value money">$34,230</td>
                     </tr>
 
                     <tr>
@@ -1132,8 +1173,8 @@
                         <td class="total-count">13</td>
                         <td class="total-count">7</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$335,909</td>
-                        <td class="stat-value money">$68,355</td>
+                        <td class="stat-value money">$290,955</td>
+                        <td class="stat-value money">$23,961</td>
                     </tr>
 
                     <tr>
@@ -1143,8 +1184,8 @@
                         <td class="total-count">19</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">68.4%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -1154,8 +1195,8 @@
                         <td class="total-count">20</td>
                         <td class="total-count">9</td>
                         <td><strong style="color: #667eea;">65.0%</strong></td>
-                        <td class="stat-value money">$431,883</td>
-                        <td class="stat-value money">$87,885</td>
+                        <td class="stat-value money">$374,085</td>
+                        <td class="stat-value money">$30,807</td>
                     </tr>
 
                     <tr>
@@ -1165,8 +1206,8 @@
                         <td class="total-count">51</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">25.5%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1176,8 +1217,8 @@
                         <td class="total-count">88</td>
                         <td class="total-count">12</td>
                         <td><strong style="color: #667eea;">13.6%</strong></td>
-                        <td class="stat-value money">$575,844</td>
-                        <td class="stat-value money">$117,180</td>
+                        <td class="stat-value money">$498,780</td>
+                        <td class="stat-value money">$41,076</td>
                     </tr>
 
                     <tr>
@@ -1187,8 +1228,8 @@
                         <td class="total-count">22</td>
                         <td class="total-count">11</td>
                         <td><strong style="color: #667eea;">54.5%</strong></td>
-                        <td class="stat-value money">$527,857</td>
-                        <td class="stat-value money">$107,415</td>
+                        <td class="stat-value money">$457,215</td>
+                        <td class="stat-value money">$37,653</td>
                     </tr>
 
                     <tr>
@@ -1198,8 +1239,8 @@
                         <td class="total-count">16</td>
                         <td class="total-count">6</td>
                         <td><strong style="color: #667eea;">75.0%</strong></td>
-                        <td class="stat-value money">$287,922</td>
-                        <td class="stat-value money">$58,590</td>
+                        <td class="stat-value money">$249,390</td>
+                        <td class="stat-value money">$20,538</td>
                     </tr>
 
                     <tr>
@@ -1209,8 +1250,8 @@
                         <td class="total-count">33</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">36.4%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1220,8 +1261,8 @@
                         <td class="total-count">15</td>
                         <td class="total-count">4</td>
                         <td><strong style="color: #667eea;">80.0%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
@@ -1231,8 +1272,8 @@
                         <td class="total-count">17</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">64.7%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1242,8 +1283,8 @@
                         <td class="total-count">14</td>
                         <td class="total-count">8</td>
                         <td><strong style="color: #667eea;">78.6%</strong></td>
-                        <td class="stat-value money">$383,896</td>
-                        <td class="stat-value money">$78,120</td>
+                        <td class="stat-value money">$332,520</td>
+                        <td class="stat-value money">$27,384</td>
                     </tr>
 
                     <tr>
@@ -1253,8 +1294,8 @@
                         <td class="total-count">12</td>
                         <td class="total-count">5</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="stat-value money">$207,825</td>
+                        <td class="stat-value money">$17,115</td>
                     </tr>
 
                     <tr>
@@ -1264,8 +1305,8 @@
                         <td class="total-count">22</td>
                         <td class="total-count">10</td>
                         <td><strong style="color: #667eea;">45.5%</strong></td>
-                        <td class="stat-value money">$479,870</td>
-                        <td class="stat-value money">$97,650</td>
+                        <td class="stat-value money">$415,650</td>
+                        <td class="stat-value money">$34,230</td>
                     </tr>
 
                     <tr>
@@ -1275,8 +1316,8 @@
                         <td class="total-count">12</td>
                         <td class="total-count">9</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$431,883</td>
-                        <td class="stat-value money">$87,885</td>
+                        <td class="stat-value money">$374,085</td>
+                        <td class="stat-value money">$30,807</td>
                     </tr>
 
                     <tr>
@@ -1286,8 +1327,8 @@
                         <td class="total-count">11</td>
                         <td class="total-count">5</td>
                         <td><strong style="color: #667eea;">90.9%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="stat-value money">$207,825</td>
+                        <td class="stat-value money">$17,115</td>
                     </tr>
 
                     <tr>
@@ -1297,8 +1338,8 @@
                         <td class="total-count">14</td>
                         <td class="total-count">5</td>
                         <td><strong style="color: #667eea;">64.3%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="stat-value money">$207,825</td>
+                        <td class="stat-value money">$17,115</td>
                     </tr>
 
                     <tr>
@@ -1308,8 +1349,8 @@
                         <td class="total-count">11</td>
                         <td class="total-count">6</td>
                         <td><strong style="color: #667eea;">81.8%</strong></td>
-                        <td class="stat-value money">$287,922</td>
-                        <td class="stat-value money">$58,590</td>
+                        <td class="stat-value money">$249,390</td>
+                        <td class="stat-value money">$20,538</td>
                     </tr>
 
                     <tr>
@@ -1319,8 +1360,8 @@
                         <td class="total-count">16</td>
                         <td class="total-count">8</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$383,896</td>
-                        <td class="stat-value money">$78,120</td>
+                        <td class="stat-value money">$332,520</td>
+                        <td class="stat-value money">$27,384</td>
                     </tr>
 
                     <tr>
@@ -1330,8 +1371,8 @@
                         <td class="total-count">10</td>
                         <td class="total-count">8</td>
                         <td><strong style="color: #667eea;">80.0%</strong></td>
-                        <td class="stat-value money">$383,896</td>
-                        <td class="stat-value money">$78,120</td>
+                        <td class="stat-value money">$332,520</td>
+                        <td class="stat-value money">$27,384</td>
                     </tr>
 
                     <tr>
@@ -1341,8 +1382,8 @@
                         <td class="total-count">8</td>
                         <td class="total-count">6</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$287,922</td>
-                        <td class="stat-value money">$58,590</td>
+                        <td class="stat-value money">$249,390</td>
+                        <td class="stat-value money">$20,538</td>
                     </tr>
 
                     <tr>
@@ -1363,8 +1404,8 @@
                         <td class="total-count">11</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">63.6%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1374,8 +1415,8 @@
                         <td class="total-count">10</td>
                         <td class="total-count">5</td>
                         <td><strong style="color: #667eea;">70.0%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="stat-value money">$207,825</td>
+                        <td class="stat-value money">$17,115</td>
                     </tr>
 
                     <tr>
@@ -1385,8 +1426,8 @@
                         <td class="total-count">11</td>
                         <td class="total-count">4</td>
                         <td><strong style="color: #667eea;">63.6%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
@@ -1396,8 +1437,8 @@
                         <td class="total-count">22</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">31.8%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1407,8 +1448,8 @@
                         <td class="total-count">7</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">85.7%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1429,19 +1470,19 @@
                         <td class="total-count">10</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">60.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Austin King, Solar Boss</td>
                         <td class="sits-count">5</td>
-                        <td class="assigns-count">6</td>
-                        <td class="total-count">11</td>
+                        <td class="assigns-count">7</td>
+                        <td class="total-count">12</td>
                         <td class="total-count">4</td>
-                        <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td><strong style="color: #667eea;">41.7%</strong></td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
@@ -1451,8 +1492,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1462,8 +1503,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1473,8 +1514,8 @@
                         <td class="total-count">6</td>
                         <td class="total-count">4</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$191,948</td>
-                        <td class="stat-value money">$39,060</td>
+                        <td class="stat-value money">$166,260</td>
+                        <td class="stat-value money">$13,692</td>
                     </tr>
 
                     <tr>
@@ -1484,8 +1525,8 @@
                         <td class="total-count">6</td>
                         <td class="total-count">5</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$239,935</td>
-                        <td class="stat-value money">$48,825</td>
+                        <td class="stat-value money">$207,825</td>
+                        <td class="stat-value money">$17,115</td>
                     </tr>
 
                     <tr>
@@ -1495,8 +1536,8 @@
                         <td class="total-count">10</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1506,8 +1547,19 @@
                         <td class="total-count">6</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">83.3%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
+                    </tr>
+
+                    <tr>
+                        <td class="manager-name">John Flowers, Kyle Donohue</td>
+                        <td class="sits-count">4</td>
+                        <td class="assigns-count">1</td>
+                        <td class="total-count">5</td>
+                        <td class="total-count">2</td>
+                        <td><strong style="color: #667eea;">80.0%</strong></td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1517,8 +1569,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">80.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1528,17 +1580,17 @@
                         <td class="total-count">9</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">44.4%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
                         <td class="manager-name">Unassigned</td>
                         <td class="sits-count">3</td>
-                        <td class="assigns-count">45</td>
-                        <td class="total-count">48</td>
+                        <td class="assigns-count">46</td>
+                        <td class="total-count">49</td>
                         <td class="total-count">0</td>
-                        <td><strong style="color: #667eea;">6.2%</strong></td>
+                        <td><strong style="color: #667eea;">6.1%</strong></td>
                         <td class="stat-value money">$0</td>
                         <td class="stat-value money">$0</td>
                     </tr>
@@ -1550,8 +1602,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1561,8 +1613,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1572,8 +1624,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1583,8 +1635,8 @@
                         <td class="total-count">10</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">30.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1594,8 +1646,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">60.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1605,8 +1657,8 @@
                         <td class="total-count">12</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">25.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1627,8 +1679,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1638,8 +1690,8 @@
                         <td class="total-count">9</td>
                         <td class="total-count">3</td>
                         <td><strong style="color: #667eea;">33.3%</strong></td>
-                        <td class="stat-value money">$143,961</td>
-                        <td class="stat-value money">$29,295</td>
+                        <td class="stat-value money">$124,695</td>
+                        <td class="stat-value money">$10,269</td>
                     </tr>
 
                     <tr>
@@ -1649,8 +1701,8 @@
                         <td class="total-count">8</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">37.5%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1671,8 +1723,8 @@
                         <td class="total-count">15</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">20.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1682,8 +1734,8 @@
                         <td class="total-count">7</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">42.9%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1693,8 +1745,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1726,8 +1778,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1737,8 +1789,8 @@
                         <td class="total-count">4</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1759,8 +1811,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1770,8 +1822,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1781,8 +1833,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">40.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1792,8 +1844,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1803,8 +1855,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">40.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1814,8 +1866,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1825,8 +1877,8 @@
                         <td class="total-count">5</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">40.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1836,8 +1888,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1847,8 +1899,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1858,8 +1910,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1880,8 +1932,8 @@
                         <td class="total-count">23</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">8.7%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1902,8 +1954,8 @@
                         <td class="total-count">3</td>
                         <td class="total-count">2</td>
                         <td><strong style="color: #667eea;">66.7%</strong></td>
-                        <td class="stat-value money">$95,974</td>
-                        <td class="stat-value money">$19,530</td>
+                        <td class="stat-value money">$83,130</td>
+                        <td class="stat-value money">$6,846</td>
                     </tr>
 
                     <tr>
@@ -1935,8 +1987,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -1990,8 +2042,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2012,8 +2064,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2034,8 +2086,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2078,8 +2130,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2089,8 +2141,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2100,8 +2152,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2122,8 +2174,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2133,8 +2185,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2221,8 +2273,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2232,8 +2284,8 @@
                         <td class="total-count">2</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">50.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2243,8 +2295,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2254,8 +2306,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">100.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2276,8 +2328,8 @@
                         <td class="total-count">1</td>
                         <td class="total-count">1</td>
                         <td><strong style="color: #667eea;">0.0%</strong></td>
-                        <td class="stat-value money">$47,987</td>
-                        <td class="stat-value money">$9,765</td>
+                        <td class="stat-value money">$41,565</td>
+                        <td class="stat-value money">$3,423</td>
                     </tr>
 
                     <tr>
@@ -2465,64 +2517,5 @@
         updateRefreshInfo();
         setInterval(updateRefreshInfo, 1000);
     </script>
-
-    <!-- METHODOLOGY SECTION -->
-    <div style="background: white; border-radius: 13px; padding: 30px; margin-top: 30px; box-shadow: 0 9px 22px rgba(0,0,0,0.2);">
-        <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.8em; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
-            📊 Methodology & Definitions
-        </h2>
-
-        <div style="line-height: 1.8; color: #2c3e50;">
-            <h3 style="color: #764ba2; margin-top: 20px; margin-bottom: 10px;">What Are Tracker Apps?</h3>
-            <p style="margin-bottom: 15px;">
-                <strong>Tracker apps</strong> monitor customers who have <strong>ALREADY been marked as "sat"</strong> in Closer apps.
-                When a closer successfully completes an appointment and marks the customer as "sat" in the Closer app (in the S.E.E. workspace),
-                that customer is automatically added to the corresponding Tracker app.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Key Metrics Explained</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Total Sits:</strong> Count of all customers who were marked as "sat" and are being tracked</li>
-                <li><strong>Paid Sits:</strong> Number of sits where payment has been received</li>
-                <li><strong>Unpaid Sits:</strong> Number of sits where payment is still outstanding</li>
-                <li><strong>APS (Amount Per Sit):</strong> The dollar amount paid per sit (varies by tracker/company)</li>
-                <li><strong>Total Owed:</strong> Calculated as <code>Unpaid Sits × APS</code></li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Calculation Methods</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Grand Total Unpaid Balance:</strong> Sum of all tracker unpaid balances across all companies</li>
-                <li><strong>Payment Status:</strong> Determined by the "Paid status" field in each tracker (values: "Paid" or "Need to pay")</li>
-                <li><strong>Monthly Breakdown:</strong> Sits are grouped by appointment date month</li>
-                <li><strong>Company Breakdown:</strong> Shows sits per tracker (Elevate You, Suntria, MEB, etc.)</li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Flow</h3>
-            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #667eea; margin: 15px 0;">
-                <p style="margin: 5px 0;">1. Appointment is set for customer</p>
-                <p style="margin: 5px 0;">2. Closer goes to appointment (tracked in Closer App)</p>
-                <p style="margin: 5px 0;">3. Customer is marked as "Sat = Yes" in Closer App</p>
-                <p style="margin: 5px 0;">4. Customer automatically appears in Tracker App</p>
-                <p style="margin: 5px 0;">5. Tracker monitors payment status and balance owed</p>
-            </div>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Sorting & Display</h3>
-            <p style="margin-bottom: 15px;">
-                All appointments are sorted in <strong>descending order by appointment date</strong>,
-                meaning the most recent appointments appear at the top of each list.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Source</h3>
-            <p style="margin-bottom: 15px;">
-                All data is pulled directly from Podio Tracker Apps via API. Each tracker (MEB, Elevate You, Suntria, etc.)
-                maintains its own separate Podio app with identical structure but different managers and APS amounts.
-            </p>
-
-            <p style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
-                For detailed technical documentation, see <code>README_TRACKER_APPS.md</code> in the project folder.
-            </p>
-        </div>
-    </div>
-
 </body>
 </html>

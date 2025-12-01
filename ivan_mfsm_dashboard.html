@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivan MFSM Stats Dashboard</title>
-    <link rel="icon" type="image/png" sizes="180x180" href="data:image/png;base64,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">
-    <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -182,8 +180,8 @@
         </div>
 
         <div class="last-updated">
-            Last Updated: November 18, 2025 at 09:01 AM<br>
-            <span style="font-size: 0.75em; opacity: 0.7; font-style: italic;">cron job: 9am, 12pm, 3pm, 6pm, 9pm daily | last ran: november 18, 2025 at 09:01 am</span>
+            Last Updated: November 24, 2025 at 03:15 PM<br>
+            <span style="font-size: 0.75em; opacity: 0.7; font-style: italic;">Auto-updates hourly 8am-8pm daily</span>
         </div>
 
         <!-- Fixed floating refresh timer -->
@@ -197,15 +195,15 @@
             <div class="summary-grid">
                 <div class="summary-box">
                     <div class="label">YTD Total Appointments</div>
-                    <div class="value">65</div>
+                    <div class="value">94</div>
                 </div>
                 <div class="summary-box">
                     <div class="label">MTD Total Appointments</div>
-                    <div class="value">37</div>
+                    <div class="value">65</div>
                 </div>
                 <div class="summary-box">
                     <div class="label">WTD Total Appointments</div>
-                    <div class="value">13</div>
+                    <div class="value">6</div>
                 </div>
             </div>
         </div>
@@ -216,31 +214,31 @@
                 <h2>📅 YTD (Year to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">73.0%</div>
+                    <div class="metric-value percentage">66.3%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">32.6%</div>
+                    <div class="metric-value percentage">41.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (36), MO (11), IL (9), MI (6), KS (3)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (65), MO (11), IL (9), MI (6), KS (3)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">65</span>
+                    <span class="metric-row-value">94</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
-                    <span class="metric-row-value">46</span>
+                    <span class="metric-row-value">61</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">15</span>
+                    <span class="metric-row-value">25</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">119.82 KW</span>
+                    <span class="metric-row-value">215.2 KW</span>
                 </div>
             </div>
 
@@ -249,31 +247,31 @@
                 <h2>📆 MTD (Month to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">57.1%</div>
+                    <div class="metric-value percentage">55.6%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">50.0%</div>
+                    <div class="metric-value percentage">57.1%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (36), MO (1)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (65)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">37</span>
+                    <span class="metric-row-value">65</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
-                    <span class="metric-row-value">20</span>
+                    <span class="metric-row-value">35</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">10</span>
+                    <span class="metric-row-value">20</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">85.6 KW</span>
+                    <span class="metric-row-value">180.98 KW</span>
                 </div>
             </div>
 
@@ -282,19 +280,19 @@
                 <h2>📅 WTD (Week to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">27.3%</div>
+                    <div class="metric-value percentage">75.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">33.3%</div>
+                    <div class="metric-value percentage">66.7%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (12), MO (1)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">KY (6)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">13</span>
+                    <span class="metric-row-value">6</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
@@ -302,18 +300,18 @@
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">1</span>
+                    <span class="metric-row-value">2</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">4.92 KW</span>
+                    <span class="metric-row-value">14.13 KW</span>
                 </div>
             </div>
         </div>
 
         <div class="footer">
             <p>Ivan MFSM Stats Dashboard | Data from Podio Closer App</p>
-            <p>YTD: 2025-01-01 - 2025-11-18 | MTD: 2025-11-01 - 2025-11-18 | WTD: 2025-11-17 - 2025-11-18</p>
+            <p>YTD: 2025-01-01 to 2025-11-24 | MTD: 2025-11-01 to 2025-11-24 | WTD: 2025-11-24 (Monday) to 2025-11-24 (Monday)</p>
             <p style="margin-top: 10px;">Tracking: MFSM Manager (Ivan Solar Boss)</p>
         </div>
     </div>
@@ -356,72 +354,13 @@
             const dateStr = nextRefresh.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
             // Update display
-            document.getElementById('nextRefresh').textContent = `⏰ Next Refresh: ${dateStr} at ${timeStr}`;
-            document.getElementById('countdown').textContent = `⏳ Time Until: ${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById('nextRefresh').textContent = `Next refresh: ${timeStr}`;
+            document.getElementById('countdown').textContent = `Time until: ${hours}h ${minutes}m`;
         }
 
         // Update immediately and then every second
         updateRefreshInfo();
         setInterval(updateRefreshInfo, 1000);
     </script>
-
-    <!-- METHODOLOGY SECTION -->
-    <div style="background: white; border-radius: 13px; padding: 30px; margin-top: 30px; box-shadow: 0 9px 22px rgba(0,0,0,0.2);">
-        <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.8em; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
-            📊 Methodology & Definitions
-        </h2>
-
-        <div style="line-height: 1.8; color: #2c3e50;">
-            <h3 style="color: #764ba2; margin-top: 20px; margin-bottom: 10px;">What Are Tracker Apps?</h3>
-            <p style="margin-bottom: 15px;">
-                <strong>Tracker apps</strong> monitor customers who have <strong>ALREADY been marked as "sat"</strong> in Closer apps.
-                When a closer successfully completes an appointment and marks the customer as "sat" in the Closer app (in the S.E.E. workspace),
-                that customer is automatically added to the corresponding Tracker app.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Key Metrics Explained</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Total Sits:</strong> Count of all customers who were marked as "sat" and are being tracked</li>
-                <li><strong>Paid Sits:</strong> Number of sits where payment has been received</li>
-                <li><strong>Unpaid Sits:</strong> Number of sits where payment is still outstanding</li>
-                <li><strong>APS (Amount Per Sit):</strong> The dollar amount paid per sit (varies by tracker/company)</li>
-                <li><strong>Total Owed:</strong> Calculated as <code>Unpaid Sits × APS</code></li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Calculation Methods</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Grand Total Unpaid Balance:</strong> Sum of all tracker unpaid balances across all companies</li>
-                <li><strong>Payment Status:</strong> Determined by the "Paid status" field in each tracker (values: "Paid" or "Need to pay")</li>
-                <li><strong>Monthly Breakdown:</strong> Sits are grouped by appointment date month</li>
-                <li><strong>Company Breakdown:</strong> Shows sits per tracker (Elevate You, Suntria, MEB, etc.)</li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Flow</h3>
-            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #667eea; margin: 15px 0;">
-                <p style="margin: 5px 0;">1. Appointment is set for customer</p>
-                <p style="margin: 5px 0;">2. Closer goes to appointment (tracked in Closer App)</p>
-                <p style="margin: 5px 0;">3. Customer is marked as "Sat = Yes" in Closer App</p>
-                <p style="margin: 5px 0;">4. Customer automatically appears in Tracker App</p>
-                <p style="margin: 5px 0;">5. Tracker monitors payment status and balance owed</p>
-            </div>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Sorting & Display</h3>
-            <p style="margin-bottom: 15px;">
-                All appointments are sorted in <strong>descending order by appointment date</strong>,
-                meaning the most recent appointments appear at the top of each list.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Source</h3>
-            <p style="margin-bottom: 15px;">
-                All data is pulled directly from Podio Tracker Apps via API. Each tracker (MEB, Elevate You, Suntria, etc.)
-                maintains its own separate Podio app with identical structure but different managers and APS amounts.
-            </p>
-
-            <p style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
-                For detailed technical documentation, see <code>README_TRACKER_APPS.md</code> in the project folder.
-            </p>
-        </div>
-    </div>
-
 </body>
 </html>
