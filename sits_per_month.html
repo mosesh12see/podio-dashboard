@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sits Per Month - 2025</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23667eea'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' dominant-baseline='middle' fill='white'>S</text></svg>">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -18,7 +14,6 @@
             min-height: 100vh;
             zoom: 0.65;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -27,24 +22,15 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
-
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px;
             text-align: center;
         }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .header .timestamp { font-size: 0.9em; opacity: 0.8; margin-top: 10px; }
         .ytd-summary {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
@@ -56,26 +42,10 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-
-        .ytd-stat {
-            text-align: center;
-        }
-
-        .ytd-stat .label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-
-        .ytd-stat .value {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-
-        .monthly-table-container {
-            padding: 30px;
-        }
-
+        .ytd-stat { text-align: center; }
+        .ytd-stat .label { font-size: 0.9em; opacity: 0.9; margin-bottom: 5px; }
+        .ytd-stat .value { font-size: 2.5em; font-weight: bold; }
+        .monthly-table-container { padding: 30px; }
         .section-title {
             font-size: 1.8em;
             color: #333;
@@ -83,7 +53,6 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -93,178 +62,93 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
         thead {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-
-        th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        th.number {
-            text-align: right;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        td.number {
-            text-align: right;
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
+        th, td { padding: 15px 20px; text-align: left; }
+        th { font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px; }
+        td { border-bottom: 1px solid #eee; }
+        tr:hover td { background: #f8f9ff; }
+        .number { text-align: center; font-weight: 600; }
         .rate-badge {
             display: inline-block;
             padding: 5px 15px;
             border-radius: 20px;
             font-weight: bold;
-            color: white;
+            font-size: 0.95em;
         }
-
-        .rate-excellent {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-
-        .rate-good {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .rate-average {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-
-        .rate-poor {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .performers-section {
-            padding: 30px;
-            background: #f8f9fa;
-        }
-
-        .performers-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .performers-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        .rate-excellent { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .rate-good { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .rate-average { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .rate-poor { background: linear-gradient(135deg, #eb3349, #f45c43); color: white; }
+        .performers-section { padding: 30px; }
+        .performers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
         .performer-card {
             background: white;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-
-        .performer-card h3 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .performer-card.top {
-            border-top: 5px solid #38ef7d;
-        }
-
-        .performer-card.bottom {
-            border-top: 5px solid #f5576c;
-        }
-
-        .rank {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .rank.top {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-
-        .rank.bottom {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
+        .performer-card.top { border-left: 5px solid #11998e; }
+        .performer-card.bottom { border-left: 5px solid #eb3349; }
+        .performer-card h3 { margin-bottom: 20px; color: #333; }
         .performer-item {
-            padding: 12px 0;
-            border-bottom: 1px solid #e0e0e0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
         }
-
-        .performer-item:last-child {
-            border-bottom: none;
-        }
-
-        .performer-name {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .performer-stats {
-            color: #666;
+        .performer-item:last-child { border-bottom: none; }
+        .rank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
             font-size: 0.9em;
         }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9em;
-            background: #f8f9fa;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 20px;
-            color: #999;
-            font-style: italic;
+        .rank.top { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .rank.bottom { background: linear-gradient(135deg, #eb3349, #f45c43); color: white; }
+        .performer-name { font-weight: 600; }
+        .performer-stats { font-size: 0.85em; color: #666; margin-top: 3px; }
+        @media (max-width: 768px) {
+            .performers-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Sits Per Month Dashboard</h1>
-            <p>2025 Year-to-Date Performance (Excluding Chase Infinite AI)</p>
+            <h1>Sits Per Month - 2025</h1>
+            <p>Monthly breakdown of appointments and sit rates</p>
+            <p class="timestamp">Generated: December 01, 2025 at 07:39 PM | Data from: 2025-12-01T19:15:59</p>
         </div>
 
         <div class="ytd-summary">
             <div class="ytd-stat">
                 <div class="label">Total Appointments</div>
-                <div class="value">3,660</div>
+                <div class="value">3,874</div>
             </div>
             <div class="ytd-stat">
                 <div class="label">Total Sits</div>
-                <div class="value">2,276</div>
+                <div class="value">2,373</div>
             </div>
             <div class="ytd-stat">
                 <div class="label">YTD Sit Rate</div>
-                <div class="value">62.2%</div>
+                <div class="value">61.3%</div>
+            </div>
+            <div class="ytd-stat">
+                <div class="label">Total Closes</div>
+                <div class="value">0</div>
+            </div>
+            <div class="ytd-stat">
+                <div class="label">YTD Close Rate</div>
+                <div class="value">0.0%</div>
             </div>
         </div>
 
@@ -274,7 +158,7 @@
                 <thead>
                     <tr>
                         <th>Month</th>
-                        <th class="number">Total Assigned</th>
+                        <th class="number">Total Appts</th>
                         <th class="number">Total Sits</th>
                         <th class="number">Sit Rate</th>
                     </tr>
@@ -282,27 +166,72 @@
                 <tbody>
 
                     <tr>
-                        <td><strong>January 2025</strong></td>
-                        <td class="number">347</td>
-                        <td class="number">171</td>
+                        <td><strong>December 2025</strong></td>
+                        <td class="number">15</td>
+                        <td class="number">3</td>
                         <td class="number">
-                            <span class="rate-badge rate-average">49.28%</span>
+                            <span class="rate-badge rate-poor">20.00%</span>
                         </td>
                     </tr>
 
                     <tr>
-                        <td><strong>February 2025</strong></td>
-                        <td class="number">279</td>
-                        <td class="number">166</td>
+                        <td><strong>November 2025</strong></td>
+                        <td class="number">318</td>
+                        <td class="number">157</td>
                         <td class="number">
-                            <span class="rate-badge rate-good">59.50%</span>
+                            <span class="rate-badge rate-average">49.37%</span>
                         </td>
                     </tr>
 
                     <tr>
-                        <td><strong>March 2025</strong></td>
-                        <td class="number">434</td>
-                        <td class="number">269</td>
+                        <td><strong>October 2025</strong></td>
+                        <td class="number">295</td>
+                        <td class="number">190</td>
+                        <td class="number">
+                            <span class="rate-badge rate-good">64.41%</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>September 2025</strong></td>
+                        <td class="number">315</td>
+                        <td class="number">209</td>
+                        <td class="number">
+                            <span class="rate-badge rate-excellent">66.35%</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>August 2025</strong></td>
+                        <td class="number">414</td>
+                        <td class="number">277</td>
+                        <td class="number">
+                            <span class="rate-badge rate-excellent">66.91%</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>July 2025</strong></td>
+                        <td class="number">386</td>
+                        <td class="number">257</td>
+                        <td class="number">
+                            <span class="rate-badge rate-excellent">66.58%</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>June 2025</strong></td>
+                        <td class="number">324</td>
+                        <td class="number">213</td>
+                        <td class="number">
+                            <span class="rate-badge rate-excellent">65.74%</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>May 2025</strong></td>
+                        <td class="number">334</td>
+                        <td class="number">207</td>
                         <td class="number">
                             <span class="rate-badge rate-good">61.98%</span>
                         </td>
@@ -318,74 +247,29 @@
                     </tr>
 
                     <tr>
-                        <td><strong>May 2025</strong></td>
-                        <td class="number">334</td>
-                        <td class="number">207</td>
+                        <td><strong>March 2025</strong></td>
+                        <td class="number">434</td>
+                        <td class="number">269</td>
                         <td class="number">
                             <span class="rate-badge rate-good">61.98%</span>
                         </td>
                     </tr>
 
                     <tr>
-                        <td><strong>June 2025</strong></td>
-                        <td class="number">324</td>
-                        <td class="number">213</td>
+                        <td><strong>February 2025</strong></td>
+                        <td class="number">279</td>
+                        <td class="number">166</td>
                         <td class="number">
-                            <span class="rate-badge rate-excellent">65.74%</span>
+                            <span class="rate-badge rate-good">59.50%</span>
                         </td>
                     </tr>
 
                     <tr>
-                        <td><strong>July 2025</strong></td>
-                        <td class="number">386</td>
-                        <td class="number">257</td>
+                        <td><strong>January 2025</strong></td>
+                        <td class="number">347</td>
+                        <td class="number">171</td>
                         <td class="number">
-                            <span class="rate-badge rate-excellent">66.58%</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>August 2025</strong></td>
-                        <td class="number">414</td>
-                        <td class="number">274</td>
-                        <td class="number">
-                            <span class="rate-badge rate-excellent">66.18%</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>September 2025</strong></td>
-                        <td class="number">315</td>
-                        <td class="number">210</td>
-                        <td class="number">
-                            <span class="rate-badge rate-excellent">66.67%</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>October 2025</strong></td>
-                        <td class="number">294</td>
-                        <td class="number">190</td>
-                        <td class="number">
-                            <span class="rate-badge rate-good">64.63%</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>November 2025</strong></td>
-                        <td class="number">119</td>
-                        <td class="number">65</td>
-                        <td class="number">
-                            <span class="rate-badge rate-average">54.62%</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>December 2025</strong></td>
-                        <td class="number">1</td>
-                        <td class="number">0</td>
-                        <td class="number">
-                            <span class="rate-badge rate-poor">0.00%</span>
+                            <span class="rate-badge rate-average">49.28%</span>
                         </td>
                     </tr>
 
@@ -394,412 +278,17 @@
         </div>
 
         <div class="performers-section">
-            <h2 class="section-title">Top & Bottom Performers (Minimum 3 Closes)</h2>
+            <h2 class="section-title">Top &amp; Bottom Performers (Minimum 3 Closes)</h2>
             <div class="performers-grid">
                 <div class="performer-card top">
-                    <h3>🏆 Top 15 Highest Sit Rate</h3>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">1</span>
-                            <span class="performer-name">Perrin Barber</span>
-                            <div class="performer-stats">
-                                3 appts • 3 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">100.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">2</span>
-                            <span class="performer-name">Solarmandan333@gmail.com</span>
-                            <div class="performer-stats">
-                                10 appts • 9 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">90.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">3</span>
-                            <span class="performer-name">James King</span>
-                            <div class="performer-stats">
-                                43 appts • 38 sits • 12 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">88.37%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">4</span>
-                            <span class="performer-name">Ronald Barbuto</span>
-                            <div class="performer-stats">
-                                17 appts • 15 sits • 7 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">88.24%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">5</span>
-                            <span class="performer-name">Olashawan Miller</span>
-                            <div class="performer-stats">
-                                32 appts • 28 sits • 13 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">87.50%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">6</span>
-                            <span class="performer-name">Deondre Farrier</span>
-                            <div class="performer-stats">
-                                18 appts • 15 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">7</span>
-                            <span class="performer-name">Rockie Beatty</span>
-                            <div class="performer-stats">
-                                12 appts • 10 sits • 4 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">8</span>
-                            <span class="performer-name">Brady Mckivitz</span>
-                            <div class="performer-stats">
-                                12 appts • 10 sits • 6 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">9</span>
-                            <span class="performer-name">bmckivitzbiz@gmail.com</span>
-                            <div class="performer-stats">
-                                6 appts • 5 sits • 5 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">10</span>
-                            <span class="performer-name">Jordan jaramillo</span>
-                            <div class="performer-stats">
-                                24 appts • 20 sits • 5 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">11</span>
-                            <span class="performer-name">Krystal Chandler, Cody Veibell, Kyle Kozlansky</span>
-                            <div class="performer-stats">
-                                6 appts • 5 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">83.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">12</span>
-                            <span class="performer-name">Tonyspanels11@gmail.com</span>
-                            <div class="performer-stats">
-                                17 appts • 14 sits • 4 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">82.35%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">13</span>
-                            <span class="performer-name">Joe Parkinson</span>
-                            <div class="performer-stats">
-                                10 appts • 8 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">80.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">14</span>
-                            <span class="performer-name">Kyle Kozlansky, Krystal Chandler, Cody Veibell</span>
-                            <div class="performer-stats">
-                                59 appts • 47 sits • 15 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">79.66%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank top">15</span>
-                            <span class="performer-name">Zach</span>
-                            <div class="performer-stats">
-                                28 appts • 22 sits • 7 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-excellent">78.57%</span>
-                        </div>
-                    </div>
+                    <h3>Top 15 Highest Sit Rate</h3>
 
                 </div>
-
                 <div class="performer-card bottom">
-                    <h3>📉 Bottom 15 Lowest Sit Rate</h3>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">1</span>
-                            <span class="performer-name">Eric Falcon</span>
-                            <div class="performer-stats">
-                                12 appts • 3 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">25.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">2</span>
-                            <span class="performer-name">Arthur Ortega</span>
-                            <div class="performer-stats">
-                                51 appts • 13 sits • 5 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">25.49%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">3</span>
-                            <span class="performer-name">Lyman Rarick</span>
-                            <div class="performer-stats">
-                                65 appts • 26 sits • 7 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">40.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">4</span>
-                            <span class="performer-name">Anahi Mejia</span>
-                            <div class="performer-stats">
-                                9 appts • 4 sits • 4 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">44.44%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">5</span>
-                            <span class="performer-name">Keesh</span>
-                            <div class="performer-stats">
-                                22 appts • 10 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">45.45%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">6</span>
-                            <span class="performer-name">Tristan Lessley</span>
-                            <div class="performer-stats">
-                                16 appts • 8 sits • 6 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">50.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">7</span>
-                            <span class="performer-name">Thomas Anthony Lee</span>
-                            <div class="performer-stats">
-                                28 appts • 14 sits • 5 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">50.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">8</span>
-                            <span class="performer-name">codyyaney@gmail.com</span>
-                            <div class="performer-stats">
-                                30 appts • 16 sits • 10 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">53.33%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">9</span>
-                            <span class="performer-name">Andrew Frank</span>
-                            <div class="performer-stats">
-                                22 appts • 12 sits • 9 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">54.55%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">10</span>
-                            <span class="performer-name">Samuel J</span>
-                            <div class="performer-stats">
-                                29 appts • 16 sits • 5 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">55.17%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">11</span>
-                            <span class="performer-name">MFSM, Solar Boss</span>
-                            <div class="performer-stats">
-                                19 appts • 11 sits • 4 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">57.89%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">12</span>
-                            <span class="performer-name">Walter Zulueta</span>
-                            <div class="performer-stats">
-                                486 appts • 282 sits • 101 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">58.02%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">13</span>
-                            <span class="performer-name">Eduardo Atayde</span>
-                            <div class="performer-stats">
-                                10 appts • 6 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">60.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">14</span>
-                            <span class="performer-name">Jacob Cole Eilers, Cade Adams</span>
-                            <div class="performer-stats">
-                                5 appts • 3 sits • 3 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">60.00%</span>
-                        </div>
-                    </div>
-
-                    <div class="performer-item">
-                        <div>
-                            <span class="rank bottom">15</span>
-                            <span class="performer-name">Coltrane Charczenko</span>
-                            <div class="performer-stats">
-                                54 appts • 33 sits • 14 closes
-                            </div>
-                        </div>
-                        <div>
-                            <span class="rate-badge rate-poor">61.11%</span>
-                        </div>
-                    </div>
+                    <h3>Bottom 15 Lowest Sit Rate</h3>
 
                 </div>
             </div>
-        </div>
-
-        <div class="footer">
-            Generated on 2025-11-22 11:30:49 | Data from Podio API | Excludes Chase Infinite AI appointments
         </div>
     </div>
 </body>
