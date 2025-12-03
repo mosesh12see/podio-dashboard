@@ -88,20 +88,44 @@ def is_infinit_ai_appointment(item):
             'chase' in customer or 'infinite' in customer or 'infinit' in customer)
 
 
-def extract_state(address):
-    """Extract state from address (STREET, ZIP CITY, STATE, COUNTRY)"""
-    if not address:
-        return "Unknown"
-    try:
-        parts = address.split(",")
-        if len(parts) >= 3:
-            state = parts[-2].strip()
-            if len(state) == 2 and state.isupper():
-                return state
-            return state[:2].upper() if state else "Unknown"
-        return "Unknown"
-    except:
-        return "Unknown"
+
+
+def get_campaign_state(hub):
+    """Map Hub (campaign) to its predominate state"""
+    if not hub or hub == 'Unknown':
+        return None
+
+    # Clean Hub value (remove HTML tags, commas, normalize)
+    hub_clean = hub.replace('<p>', '').replace('</p>', '').replace(',', '').strip()
+    hub_lower = hub_clean.lower().replace(' ', '')
+
+    # Campaign to State mapping (case-insensitive, handles variations)
+    campaign_map = {
+        'ky': 'KY',
+        'ga': 'GA',
+        'stlmo': 'MO',
+        'stlil': 'IL',
+        'denco': 'CO',
+        'kcmo': 'MO',
+        'dtmi': 'MI',
+        'tn': 'TN',
+        'in': 'IN',
+        'oh': 'OH',
+        'tx': 'TX',
+        'fl': 'FL',
+        'ca': 'CA',
+        'az': 'AZ',
+        'nc': 'NC',
+        'sc': 'SC',
+        'va': 'VA',
+        'pa': 'PA',
+        'ny': 'NY',
+        'nj': 'NJ',
+        'ma': 'MA',
+        'md': 'MD',
+    }
+
+    return campaign_map.get(hub_lower, None)
 
 
 def load_cache():
@@ -172,7 +196,7 @@ def analyze_data(items):
         'ytd_sits_excl_today': 0,
         'ytd_assigns_excl_today': 0,
         'monthly': defaultdict(lambda: {'sits': 0, 'assigns': 0, 'closes': 0}),
-        'state_by_month': defaultdict(lambda: defaultdict(lambda: {'sits': 0, 'total': 0})),
+        'campaign_sits_by_month': defaultdict(lambda: defaultdict(int)),
         'total_appointments': 0,
         'excluded_infinit_ai': 0
     }
@@ -214,9 +238,10 @@ def analyze_data(items):
         status = get_field_value(item, 'Status', '').lower()
         is_closed = ('closed' in status or 'close' in status or 'sold' in status)
 
-        # Get state from address
-        address = get_field_value(item, 'Address', '')
-        state = extract_state(address)
+        # Get campaign (Hub) and state
+        hub = get_field_value(item, 'Hub', 'Unknown')
+        hub_clean = hub.replace('<p>', '').replace('</p>', '').replace(',', '').strip()
+        campaign_state = get_campaign_state(hub)
 
         # Count as appointment
         totals['total_appointments'] += 1
@@ -225,10 +250,12 @@ def analyze_data(items):
         month_key = appt_date.strftime('%Y-%m')
         month_name = appt_date.strftime('%B %Y')
 
-        # Track state by month
-        totals['state_by_month'][month_key][state]['total'] += 1
-        if is_sit:
-            totals['state_by_month'][month_key][state]['sits'] += 1
+        # Track campaign sits (only if we have a valid state mapping)
+        if is_sit and campaign_state:
+            # Normalize campaign name: capitalize first letter of each word
+            hub_normalized = ' '.join(word.capitalize() for word in hub_clean.split())
+            campaign_label = f"{hub_normalized} ({campaign_state})"
+            totals['campaign_sits_by_month'][month_key][campaign_label] += 1
 
         # Update monthly totals
         if is_sit:
@@ -752,85 +779,77 @@ def generate_html(manager_stats, totals, data_timestamp):
         </div>
 """
 
-    # Generate state chart (last 6 months) - insert after low performers
-    state_html = ""
+    # Add campaign sits section
     now = datetime.now()
-    last_6_months = []
+
+    # Get the first month (oldest) to establish campaign order
+    first_month_date = now - timedelta(days=30 * 5)
+    first_month_key = first_month_date.strftime('%Y-%m')
+
+    # Get campaign order from the first month
+    campaign_order = []
+    if first_month_key in totals['campaign_sits_by_month']:
+        first_month_data = totals['campaign_sits_by_month'][first_month_key]
+        # Sort by sits in first month (descending)
+        sorted_first_month = sorted(first_month_data.items(), key=lambda x: x[1], reverse=True)
+        campaign_order = [c[0] for c in sorted_first_month]
+
+    # Add any campaigns that appear in later months but not in first month
+    all_campaigns = set()
+    for i in range(5, -1, -1):
+        month_date = now - timedelta(days=30 * i)
+        month_key = month_date.strftime('%Y-%m')
+        if month_key in totals['campaign_sits_by_month']:
+            all_campaigns.update(totals['campaign_sits_by_month'][month_key].keys())
+
+    # Append any new campaigns at the end (alphabetically)
+    new_campaigns = sorted(all_campaigns - set(campaign_order))
+    campaign_order.extend(new_campaigns)
+
+    html += """
+        <div class="section">
+            <h2>📍 Sits Per Campaign - Last 6 Months</h2>
+"""
+
     for i in range(5, -1, -1):
         month_date = now - timedelta(days=30 * i)
         month_key = month_date.strftime('%Y-%m')
         month_name = month_date.strftime('%B %Y')
-        last_6_months.append((month_key, month_name))
 
-    # Get all states
-    all_states = set()
-    for month_key, _ in last_6_months:
-        if month_key in totals['state_by_month']:
-            all_states.update(totals['state_by_month'][month_key].keys())
+        campaign_data = totals['campaign_sits_by_month'].get(month_key, {})
 
-    if all_states:
-        state_html = """
-        <div class="section">
-            <h2>📍 Sits Per State - Last 6 Months</h2>
-            <table style="font-size: 0.9em;">
-                <thead>
-                    <tr>
-                        <th>State</th>"""
+        # Show month even if no campaigns have sits
+        html += f"""
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea; margin-bottom: 10px;">{month_name}</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px;">
+"""
 
-        for _, month_name in last_6_months:
-            state_html += f'<th style="font-size: 0.8em;">{month_name[:3]}</th>'
+        # Display campaigns in consistent order (show all, even 0 sits)
+        for campaign in campaign_order:
+            sits = campaign_data.get(campaign, 0)
+            if sits > 0:
+                html += f"""
+                    <div style="background: #f8f9fa; padding: 10px; border-left: 3px solid #667eea; border-radius: 4px;">
+                        <strong>{campaign}:</strong> <span style="color: #28a745; font-weight: bold;">{sits} sits</span>
+                    </div>
+"""
+            else:
+                # Show 0 sits with lighter style to maintain position
+                html += f"""
+                    <div style="background: #f8f9fa; padding: 10px; border-left: 3px solid #ddd; border-radius: 4px; opacity: 0.5;">
+                        <strong>{campaign}:</strong> <span style="color: #999; font-weight: bold;">0 sits</span>
+                    </div>
+"""
 
-        state_html += """<th>Total</th>
-                        <th>Sit Rate</th>
-                    </tr>
-                </thead>
-                <tbody>"""
+        html += """
+                </div>
+            </div>
+"""
 
-        # Sort states
-        sorted_states = sorted([s for s in all_states if s != 'Unknown'])
-        if 'Unknown' in all_states:
-            sorted_states.append('Unknown')
-
-        for state in sorted_states:
-            total_sits = 0
-            total_appts = 0
-            monthly_data = []
-
-            for month_key, _ in last_6_months:
-                if month_key in totals['state_by_month'] and state in totals['state_by_month'][month_key]:
-                    sits = totals['state_by_month'][month_key][state]['sits']
-                    total = totals['state_by_month'][month_key][state]['total']
-                else:
-                    sits = 0
-                    total = 0
-                total_sits += sits
-                total_appts += total
-                monthly_data.append((sits, total))
-
-            if total_appts > 0:
-                sit_rate = (total_sits / total_appts) * 100
-                state_html += f"""
-                    <tr>
-                        <td class="manager-name">{state}</td>"""
-
-                for sits, total in monthly_data:
-                    if total > 0:
-                        rate = (sits / total * 100)
-                        state_html += f'<td style="font-size: 0.85em;">{sits}/{total}<br><span style="color: #667eea; font-size: 0.8em;">({rate:.0f}%)</span></td>'
-                    else:
-                        state_html += '<td style="color: #999;">-</td>'
-
-                state_html += f"""<td class="sits-count">{total_sits}</td>
-                        <td style="font-weight: bold; color: {'#28a745' if sit_rate >= 50 else '#dc3545'};">{sit_rate:.1f}%</td>
-                    </tr>"""
-
-        state_html += """
-                </tbody>
-            </table>
-        </div>"""
-
-    html += state_html
-
+    html += """
+        </div>
+"""
 
     # Calculate WTD totals for header (excluding today)
     wtd_total_sits = totals['wtd_sits_excl_today']
