@@ -31,7 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dotenv
 
-      - name: Generate dashboard
+      - name: Generate all dashboards
         env:
           PODIO_CLIENT_ID: ${{ secrets.PODIO_CLIENT_ID }}
           PODIO_CLIENT_SECRET: ${{ secrets.PODIO_CLIENT_SECRET }}
@@ -39,13 +39,15 @@ jobs:
           PODIO_PASSWORD: ${{ secrets.PODIO_PASSWORD }}
         run: |
           python generate_complete_dashboard.py
-          echo "Dashboard generated at $(date)"
+          echo "✅ Complete dashboard generated"
+          python generate_ivan_mfsm_dashboard.py
+          echo "✅ Ivan MFSM dashboard generated at $(date)"
 
       - name: Commit and push if changed
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add complete_dashboard.html
+          git add complete_dashboard.html ivan_mfsm_dashboard.html
 
           # Check if there are changes
           if git diff --staged --quiet; then
