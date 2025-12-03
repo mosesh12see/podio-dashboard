@@ -88,6 +88,22 @@ def is_infinit_ai_appointment(item):
             'chase' in customer or 'infinite' in customer or 'infinit' in customer)
 
 
+def extract_state(address):
+    """Extract state abbreviation from address (format: STREET, ZIP CITY, STATE, COUNTRY)"""
+    if not address:
+        return 'Unknown'
+    try:
+        parts = address.split(',')
+        if len(parts) >= 3:
+            state = parts[-2].strip()  # Second to last part is the state
+            if len(state) == 2 and state.isupper():
+                return state
+            return state[:2].upper() if state else 'Unknown'
+        return 'Unknown'
+    except:
+        return 'Unknown'
+
+
 def load_cache():
     """Load Closer App data from cache"""
     try:
@@ -156,6 +172,7 @@ def analyze_data(items):
         'ytd_sits_excl_today': 0,
         'ytd_assigns_excl_today': 0,
         'monthly': defaultdict(lambda: {'sits': 0, 'assigns': 0, 'closes': 0}),
+        'state_by_month': defaultdict(lambda: defaultdict(lambda: {'sits': 0, 'total': 0})),
         'total_appointments': 0,
         'excluded_infinit_ai': 0
     }
@@ -197,12 +214,21 @@ def analyze_data(items):
         status = get_field_value(item, 'Status', '').lower()
         is_closed = ('closed' in status or 'close' in status or 'sold' in status)
 
+        # Get state from address
+        address = get_field_value(item, 'Address', '')
+        state = extract_state(address)
+
         # Count as appointment
         totals['total_appointments'] += 1
 
         # Get month key
         month_key = appt_date.strftime('%Y-%m')
         month_name = appt_date.strftime('%B %Y')
+
+        # Track state by month
+        totals['state_by_month'][month_key][state]['total'] += 1
+        if is_sit:
+            totals['state_by_month'][month_key][state]['sits'] += 1
 
         # Update monthly totals
         if is_sit:
@@ -352,6 +378,79 @@ def generate_html(manager_stats, totals, data_timestamp):
 
     # Identify low performers (5+ sits, <50% sit rate in last 14 days)
     low_performers = identify_low_performers(manager_stats)
+
+    # Get last 6 months for state chart
+    last_6_months = []
+    for i in range(6):
+        month_date = now - timedelta(days=30 * i)
+        month_key = month_date.strftime('%Y-%m')
+        month_name = month_date.strftime('%B %Y')
+        last_6_months.append((month_key, month_name))
+
+    # Generate sits per state per month chart (last 6 months)
+    state_chart_html = """
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>📍 Sits Per State - Last 6 Months</h2>
+            <div class="state-grid">
+    """
+
+    # Get all unique states from last 6 months
+    all_states = set()
+    for month_key, _ in last_6_months:
+        if month_key in totals['state_by_month']:
+            all_states.update(totals['state_by_month'][month_key].keys())
+
+    # Sort states alphabetically (Unknown at end)
+    sorted_states = sorted([s for s in all_states if s != 'Unknown'])
+    if 'Unknown' in all_states:
+        sorted_states.append('Unknown')
+
+    # Create state cards
+    for state in sorted_states:
+        total_sits = 0
+        total_appts = 0
+        monthly_data = []
+
+        for month_key, month_name in reversed(last_6_months):  # Oldest to newest
+            if month_key in totals['state_by_month'] and state in totals['state_by_month'][month_key]:
+                sits = totals['state_by_month'][month_key][state]['sits']
+                total = totals['state_by_month'][month_key][state]['total']
+                total_sits += sits
+                total_appts += total
+                monthly_data.append((month_name, sits, total))
+
+        if total_appts > 0:
+            sit_rate = (total_sits / total_appts) * 100
+
+            state_chart_html += f"""
+                <div class="state-card">
+                    <h3>{state}</h3>
+                    <div class="state-total">
+                        <div class="sits-count">{total_sits} sits</div>
+                        <div class="sit-rate">{sit_rate:.1f}% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    """
+
+            for month_name, sits, total in monthly_data:
+                month_rate = (sits / total * 100) if total > 0 else 0
+                state_chart_html += f"""
+                        <div class="month-row">
+                            <span class="month-label">{month_name[:3]}</span>
+                            <span class="month-sits">{sits}/{total}</span>
+                            <span class="month-rate">{month_rate:.0f}%</span>
+                        </div>
+    """
+
+            state_chart_html += """
+                    </div>
+                </div>
+    """
+
+    state_chart_html += """
+            </div>
+        </div>
+    """
 
     # Get last 12 months for month-by-month section
     months = []
@@ -567,6 +666,69 @@ def generate_html(manager_stats, totals, data_timestamp):
             font-size: 1.2em;
         }}
 
+        .state-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }}
+        .state-card {{
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }}
+        .state-card h3 {{
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: #495057;
+            text-align: center;
+        }}
+        .state-total {{
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }}
+        .sits-count {{
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }}
+        .sit-rate {{
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 5px;
+        }}
+        .state-monthly {{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }}
+        .month-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+        }}
+        .month-label {{
+            font-weight: 600;
+            color: #495057;
+            min-width: 35px;
+        }}
+        .month-sits {{
+            color: #6c757d;
+        }}
+        .month-rate {{
+            color: #28a745;
+            font-weight: 600;
+            min-width: 35px;
+            text-align: right;
+        }}
+
         .monthly-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -623,6 +785,8 @@ def generate_html(manager_stats, totals, data_timestamp):
             <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
             <div id="countdown" style="font-size: 14px; font-weight: 700; color: #ffeb3b;"></div>
         </div>
+
+{state_chart_html}
 
 {month_by_month_html}
 

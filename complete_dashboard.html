@@ -129,6 +129,69 @@
             font-size: 1.2em;
         }
 
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .state-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+        .state-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: #495057;
+            text-align: center;
+        }
+        .state-total {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .sits-count {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .sit-rate {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .state-monthly {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .month-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .month-label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 35px;
+        }
+        .month-sits {
+            color: #6c757d;
+        }
+        .month-rate {
+            color: #28a745;
+            font-weight: 600;
+            min-width: 35px;
+            text-align: right;
+        }
+
         .monthly-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -176,7 +239,7 @@
             <h1>📊 Complete Podio Dashboard</h1>
             <p>All Sits & Assigns by Manager (Excluding Infinit AI)</p>
             <p style="font-size: 0.9em; opacity: 0.8;">Last Updated: 2025-12-02T19:10:11.924246</p>
-            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">Generated: December 02, 2025 at 07:10 PM</p>
+            <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">Generated: December 02, 2025 at 07:40 PM</p>
             <p style="font-size: 0.75em; opacity: 0.6; margin-top: 5px; font-style: italic;">cron job: hourly from 8am to 8pm</p>
         </div>
 
@@ -185,6 +248,831 @@
             <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
             <div id="countdown" style="font-size: 14px; font-weight: 700; color: #ffeb3b;"></div>
         </div>
+
+
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>📍 Sits Per State - Last 6 Months</h2>
+            <div class="state-grid">
+    
+                <div class="state-card">
+                    <h3>30</h3>
+                    <div class="state-total">
+                        <div class="sits-count">28 sits</div>
+                        <div class="sit-rate">59.6% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">14/18</span>
+                            <span class="month-rate">78%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">12/26</span>
+                            <span class="month-rate">46%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">2/3</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>31</h3>
+                    <div class="state-total">
+                        <div class="sits-count">0 sits</div>
+                        <div class="sit-rate">0.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>40</h3>
+                    <div class="state-total">
+                        <div class="sits-count">17 sits</div>
+                        <div class="sit-rate">56.7% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">2/2</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">15/24</span>
+                            <span class="month-rate">62%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">0/4</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>41</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">100.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>42</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">33.3% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>43</h3>
+                    <div class="state-total">
+                        <div class="sits-count">4 sits</div>
+                        <div class="sit-rate">80.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">4/5</span>
+                            <span class="month-rate">80%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>44</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">100.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>48</h3>
+                    <div class="state-total">
+                        <div class="sits-count">2 sits</div>
+                        <div class="sit-rate">66.7% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">1/2</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>61</h3>
+                    <div class="state-total">
+                        <div class="sits-count">5 sits</div>
+                        <div class="sit-rate">62.5% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">2/3</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">2/4</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>62</h3>
+                    <div class="state-total">
+                        <div class="sits-count">12 sits</div>
+                        <div class="sit-rate">66.7% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">6/8</span>
+                            <span class="month-rate">75%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">5/7</span>
+                            <span class="month-rate">71%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>63</h3>
+                    <div class="state-total">
+                        <div class="sits-count">37 sits</div>
+                        <div class="sit-rate">55.2% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">2/4</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">2/3</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">25/42</span>
+                            <span class="month-rate">60%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">8/16</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">0/2</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>64</h3>
+                    <div class="state-total">
+                        <div class="sits-count">3 sits</div>
+                        <div class="sit-rate">60.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">2/3</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>65</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">100.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>80</h3>
+                    <div class="state-total">
+                        <div class="sits-count">4 sits</div>
+                        <div class="sit-rate">80.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">4/5</span>
+                            <span class="month-rate">80%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>81</h3>
+                    <div class="state-total">
+                        <div class="sits-count">0 sits</div>
+                        <div class="sit-rate">0.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>AT</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">100.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>CO</h3>
+                    <div class="state-total">
+                        <div class="sits-count">4 sits</div>
+                        <div class="sit-rate">57.1% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">4/7</span>
+                            <span class="month-rate">57%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>GA</h3>
+                    <div class="state-total">
+                        <div class="sits-count">32 sits</div>
+                        <div class="sit-rate">61.5% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">1/3</span>
+                            <span class="month-rate">33%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">14/21</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">17/27</span>
+                            <span class="month-rate">63%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>GE</h3>
+                    <div class="state-total">
+                        <div class="sits-count">28 sits</div>
+                        <div class="sit-rate">62.2% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">1/3</span>
+                            <span class="month-rate">33%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">13/18</span>
+                            <span class="month-rate">72%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">14/24</span>
+                            <span class="month-rate">58%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>IL</h3>
+                    <div class="state-total">
+                        <div class="sits-count">379 sits</div>
+                        <div class="sit-rate">71.2% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">119/161</span>
+                            <span class="month-rate">74%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">131/187</span>
+                            <span class="month-rate">70%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">81/117</span>
+                            <span class="month-rate">69%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">25/32</span>
+                            <span class="month-rate">78%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">22/34</span>
+                            <span class="month-rate">65%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>KA</h3>
+                    <div class="state-total">
+                        <div class="sits-count">37 sits</div>
+                        <div class="sit-rate">71.2% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">6/11</span>
+                            <span class="month-rate">55%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">17/20</span>
+                            <span class="month-rate">85%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">12/19</span>
+                            <span class="month-rate">63%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">2/2</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>KE</h3>
+                    <div class="state-total">
+                        <div class="sits-count">18 sits</div>
+                        <div class="sit-rate">58.1% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">2/4</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">15/26</span>
+                            <span class="month-rate">58%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>KS</h3>
+                    <div class="state-total">
+                        <div class="sits-count">39 sits</div>
+                        <div class="sit-rate">79.6% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">13/17</span>
+                            <span class="month-rate">76%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">9/13</span>
+                            <span class="month-rate">69%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">13/15</span>
+                            <span class="month-rate">87%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">4/4</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>KY</h3>
+                    <div class="state-total">
+                        <div class="sits-count">20 sits</div>
+                        <div class="sit-rate">55.6% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">4/4</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">15/29</span>
+                            <span class="month-rate">52%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">1/3</span>
+                            <span class="month-rate">33%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>M</h3>
+                    <div class="state-total">
+                        <div class="sits-count">0 sits</div>
+                        <div class="sit-rate">0.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">0/1</span>
+                            <span class="month-rate">0%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>MI</h3>
+                    <div class="state-total">
+                        <div class="sits-count">239 sits</div>
+                        <div class="sit-rate">60.5% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">69/114</span>
+                            <span class="month-rate">61%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">69/111</span>
+                            <span class="month-rate">62%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">60/98</span>
+                            <span class="month-rate">61%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">34/57</span>
+                            <span class="month-rate">60%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">7/15</span>
+                            <span class="month-rate">47%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>MO</h3>
+                    <div class="state-total">
+                        <div class="sits-count">162 sits</div>
+                        <div class="sit-rate">59.3% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Jul</span>
+                            <span class="month-sits">45/69</span>
+                            <span class="month-rate">65%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">49/79</span>
+                            <span class="month-rate">62%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">30/49</span>
+                            <span class="month-rate">61%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">28/57</span>
+                            <span class="month-rate">49%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">9/17</span>
+                            <span class="month-rate">53%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Dec</span>
+                            <span class="month-sits">1/2</span>
+                            <span class="month-rate">50%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>OH</h3>
+                    <div class="state-total">
+                        <div class="sits-count">8 sits</div>
+                        <div class="sit-rate">53.3% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">8/15</span>
+                            <span class="month-rate">53%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>US</h3>
+                    <div class="state-total">
+                        <div class="sits-count">1 sits</div>
+                        <div class="sit-rate">100.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="state-card">
+                    <h3>Unknown</h3>
+                    <div class="state-total">
+                        <div class="sits-count">9 sits</div>
+                        <div class="sit-rate">90.0% sit rate</div>
+                    </div>
+                    <div class="state-monthly">
+    
+                        <div class="month-row">
+                            <span class="month-label">Aug</span>
+                            <span class="month-sits">2/3</span>
+                            <span class="month-rate">67%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Sep</span>
+                            <span class="month-sits">4/4</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Oct</span>
+                            <span class="month-sits">1/1</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                        <div class="month-row">
+                            <span class="month-label">Nov</span>
+                            <span class="month-sits">2/2</span>
+                            <span class="month-rate">100%</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
 
 
         <!-- Month by Month Section -->
