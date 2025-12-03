@@ -716,7 +716,7 @@ html = f"""<!DOCTYPE html>
 </html>
 """
 
-with open("/Users/mosesherrera/Desktop/Podio Api Dashboard/ivan_mfsm_dashboard.html", "w") as f:
+with open("ivan_mfsm_dashboard.html", "w") as f:
     f.write(html)
 
 print("✅ Dashboard saved: ivan_mfsm_dashboard.html")
