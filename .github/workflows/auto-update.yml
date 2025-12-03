@@ -11,6 +11,9 @@ on:
       - 'generate_ivan_mfsm_dashboard.py'
       - '.github/workflows/auto-update.yml'
 
+permissions:
+  contents: write
+
 jobs:
   update-dashboard:
     runs-on: ubuntu-latest
