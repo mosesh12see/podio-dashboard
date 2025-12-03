@@ -3,11 +3,12 @@ name: Auto Update Podio Dashboard
 on:
   schedule:
     - cron: '*/30 * * * *'  # Every 30 minutes
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths:
       - 'generate_complete_dashboard.py'
+      - 'generate_ivan_mfsm_dashboard.py'
       - '.github/workflows/auto-update.yml'
 
 jobs:
@@ -18,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for proper commits
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,8 +36,6 @@ jobs:
         env:
           PODIO_CLIENT_ID: ${{ secrets.PODIO_CLIENT_ID }}
           PODIO_CLIENT_SECRET: ${{ secrets.PODIO_CLIENT_SECRET }}
-          PODIO_USERNAME: ${{ secrets.PODIO_USERNAME }}
-          PODIO_PASSWORD: ${{ secrets.PODIO_PASSWORD }}
         run: |
           python generate_complete_dashboard.py
           echo "✅ Complete dashboard generated"
@@ -49,7 +48,6 @@ jobs:
           git config user.email "actions@github.com"
           git add complete_dashboard.html ivan_mfsm_dashboard.html
 
-          # Check if there are changes
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
