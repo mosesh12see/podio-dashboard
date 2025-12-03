@@ -12,3 +12,5 @@ secrets/
 !*.html
 !*.md
 !README.md
+.claude-flow/
+.swarm/
